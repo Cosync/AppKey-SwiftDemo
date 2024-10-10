@@ -11,7 +11,7 @@ import SwiftUI
 struct appkeyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(AppState())
         }
     }
 }
