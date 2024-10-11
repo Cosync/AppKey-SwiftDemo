@@ -34,10 +34,7 @@ struct LoginView: View {
         
         VStack(spacing: 20) {
             
-            Spacer().frame(height: 60)
-            
-            Text("APP KEY iOS")
-                .font(.largeTitle)
+            Image("AppKey").frame(width: 300).padding()
             
             Spacer().frame(height: 150)
             
