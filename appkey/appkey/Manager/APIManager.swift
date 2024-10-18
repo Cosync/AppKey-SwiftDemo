@@ -13,6 +13,8 @@ var API = APIManager.shared
 class APIManager:ObservableObject {
     
     static let shared = APIManager()
+    
+   
     var appUser:AppUser? = nil
     var application:Application? = nil
     var accessToken:String = ""
@@ -26,8 +28,11 @@ class APIManager:ObservableObject {
                 throw APIRequestError.invalidData
             }
             
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
             let config = URLSessionConfiguration.default
-            config.httpAdditionalHeaders = ["app-token": Constants.APP_TOKEN]
+            config.httpAdditionalHeaders = ["app-token": appToken]
 
             let session = URLSession(configuration: config)
             let (data, response) = try await session.data(from: url)
@@ -102,10 +107,13 @@ class APIManager:ObservableObject {
             let session = URLSession(configuration: config)
             let url = URL(string: url)!
             
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
             var urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+            urlRequest.allHTTPHeaderFields = ["app-token": appToken]
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
             
@@ -196,10 +204,14 @@ class APIManager:ObservableObject {
             let session = URLSession(configuration: config)
             let url = URL(string: url)!
             
+            
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
             var urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+            urlRequest.allHTTPHeaderFields = ["app-token": appToken]
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
             
@@ -241,10 +253,13 @@ class APIManager:ObservableObject {
               let session = URLSession(configuration: config)
               let url = URL(string: url)!
               
+              let defaults = UserDefaults.standard
+              let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+              
               var urlRequest = URLRequest(url: url)
               urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
               urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-              urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+              urlRequest.allHTTPHeaderFields = ["app-token": appToken]
               urlRequest.httpMethod = "POST"
               urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
           
@@ -286,10 +301,14 @@ class APIManager:ObservableObject {
             let session = URLSession(configuration: config)
             let url = URL(string: url)!
             
+            
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
             var urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+            urlRequest.allHTTPHeaderFields = ["app-token": appToken]
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
             
@@ -340,10 +359,14 @@ class APIManager:ObservableObject {
               let session = URLSession(configuration: config)
               let url = URL(string: url)!
               
+              
+              let defaults = UserDefaults.standard
+              let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+              
               var urlRequest = URLRequest(url: url)
               urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
               urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-              urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+              urlRequest.allHTTPHeaderFields = ["app-token": appToken]
               urlRequest.httpMethod = "POST"
               urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
           
@@ -397,10 +420,14 @@ class APIManager:ObservableObject {
             let session = URLSession(configuration: config)
             let url = URL(string: url)!
             
+            
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
             var urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+            urlRequest.allHTTPHeaderFields = ["app-token": appToken]
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
        
@@ -569,10 +596,15 @@ class APIManager:ObservableObject {
               let session = URLSession(configuration: config)
               let url = URL(string: url)!
               
+              
+              let defaults = UserDefaults.standard
+              let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+              
+              
               var urlRequest = URLRequest(url: url)
               urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
               urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-              urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+              urlRequest.allHTTPHeaderFields = ["app-token":appToken]
               urlRequest.httpMethod = "POST"
               urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
           
@@ -620,10 +652,15 @@ class APIManager:ObservableObject {
             let session = URLSession(configuration: config)
             let url = URL(string: url)!
             
+            
+            let defaults = UserDefaults.standard
+            let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+            
+            
             var urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.allHTTPHeaderFields = ["app-token": Constants.APP_TOKEN]
+            urlRequest.allHTTPHeaderFields = ["app-token": appToken]
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = requestBodyComponents.query?.data(using: .utf8)
        

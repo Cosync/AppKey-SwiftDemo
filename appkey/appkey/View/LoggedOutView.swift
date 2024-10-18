@@ -11,7 +11,7 @@ import AuthenticationServices
 struct LoggedOutView: View {
    
    @EnvironmentObject var appState: AppState
-   @StateObject private var apiManager = APIManager.shared
+    
    @State var selection: String = "Login"
    
    var body: some View {
@@ -33,7 +33,10 @@ struct LoggedOutView: View {
                    Text("Signup")
                }.tag("Signup")
                
-              
+               AppTokenView().tabItem {
+                   Image(systemName: "t.circle.fill")
+                   Text("App Token")
+               }.tag("AppToken")
            }
            
            
@@ -113,11 +116,15 @@ struct LoggedOutView: View {
        }
        .onAppear{
            Task{
-               do{
+               do{ 
+                   
                    print("tab selection ", selection)
                    self.appState.tabSelection = selection
                    self.appState.loading = true
-                   if let app = try await apiManager.getApp() {
+                   if let app = try await API.getApp() {
+                       
+                       print(" app ", app)
+                       
                        self.appState.application = app;
                        self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled;
                    }
