@@ -1,5 +1,5 @@
 //
-//  AKExtensionManager.swift
+//  ExtensionManager.swift
 //  appkey
 //
 //  Licensed to the Apache Software Foundation (ASF) under one

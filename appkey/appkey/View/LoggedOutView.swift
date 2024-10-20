@@ -121,7 +121,7 @@ struct LoggedOutView: View {
                    print("tab selection ", selection)
                    self.appState.tabSelection = selection
                    self.appState.loading = true
-                   if let app = try await API.getApp() {
+                   if let app = try await AppKeyAPI.getApp() {
                        
                        print(" app ", app)
                        

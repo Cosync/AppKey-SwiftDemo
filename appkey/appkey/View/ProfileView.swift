@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var apiManager = APIManager.shared
+    @StateObject private var apiManager = AppKeyAPIManager.shared
     @State private var locale:String = "EN"
     var body: some View {
         VStack{

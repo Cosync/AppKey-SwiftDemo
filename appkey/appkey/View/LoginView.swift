@@ -12,14 +12,14 @@ import os
 
 struct LoginView: View {
     @State private var email = ""
-    @StateObject private var pkManager = PasskeysManager.shared
+    @StateObject private var pkManager = AKPasskeysManager.shared
     @EnvironmentObject var appState: AppState
     @State var loadingStatus = ""
     @State var showingAlert = false
     @State var isLoggedIn = false
     @State var isNoPasskey = false
     @State var anonymousLoginEnabled = false
-    @State var signupChallenge:SignupChallenge?
+    @State var signupChallenge:AKSignupChallenge?
     
     let logger = Logger()
     
@@ -142,7 +142,7 @@ struct LoginView: View {
                        
                         loadingStatus = "verify server challenge"
                         
-                        let response = try await API.loginAnonymousComplete(handle: challengeData.user.handle, attest: attestation)
+                        let response = try await AppKeyAPI.loginAnonymousComplete(handle: challengeData.user.handle, attest: attestation)
                         logger.log("loginAnonymousComplete  response \(response)")
                     
                         appState.loading = false
@@ -174,18 +174,18 @@ struct LoginView: View {
                     
                     do{
                         
-                        let user = try await API.loginComplete(handle: email, assertion: assert)
+                        let user = try await AppKeyAPI.loginComplete(handle: email, assertion: assert)
                         logger.log("Login Complete user \(user!.appUserId)")
                         
                         appState.loading = false
                         
-                        if let application = APIManager.shared.application, application.userNamesEnabled, user?.userName == nil {
+                        if let application = AppKeyAPIManager.shared.application, application.userNamesEnabled, user?.userName == nil {
                             appState.target = .loginUserName
                         }
                         else { appState.target = .loggedIn }
                         
                     }
-                    catch let error as APIRequestError {
+                    catch let error as AppKeyError {
                         logger.log("Login Complete error \(error.message)")
                         appState.loading = false
                         loadingStatus = error.message
@@ -256,7 +256,7 @@ struct LoginView: View {
                 appState.loading.toggle()
  
                 
-                if let response = try await API.login(handle: email){
+                if let response = try await AppKeyAPI.login(handle: email){
                     
                  
                     
@@ -277,7 +277,7 @@ struct LoginView: View {
                 }
                 
             }
-            catch let error as APIRequestError {
+            catch let error as AppKeyError {
                 appState.loading = false
                 
                 if(error == .accountNoPasskey){
@@ -309,7 +309,7 @@ struct LoginView: View {
                 appState.loading.toggle()
  
                 let uuidString = UUID().uuidString
-                if let response = try await API.loginAnonymous(uuidString: uuidString){
+                if let response = try await AppKeyAPI.loginAnonymous(uuidString: uuidString){
                     
                     signupChallenge = response
                     let userId = response.user.id
@@ -330,7 +330,7 @@ struct LoginView: View {
                 }
                 
             }
-            catch let error as APIRequestError {
+            catch let error as AppKeyError {
                 appState.loading = false
                 loadingStatus = error.message
                 showingAlert.toggle()

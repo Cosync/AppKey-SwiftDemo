@@ -10,7 +10,7 @@ import SwiftUI
 struct SetUsernameView: View {
     
     @EnvironmentObject var appState: AppState
-    @StateObject private var apiManager = APIManager.shared
+    @StateObject private var apiManager = AppKeyAPIManager.shared
     @State private var userName = ""
     @FocusState var focusedUsername: Bool?
     @State var isSettingUserName = false
@@ -93,7 +93,7 @@ struct SetUsernameView: View {
     
     func showErrorLoginUserName(err: Error?){
         showAlert.toggle()
-        if let error = err as? APIRequestError {
+        if let error = err as? AppKeyError {
             self.message =  error.message
         }
         else {

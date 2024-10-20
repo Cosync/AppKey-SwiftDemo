@@ -27,12 +27,12 @@ struct AppTokenView: View {
             
             Group {
                 TextField("App Token", text: $token, prompt: Text("Please your app token"), axis: .vertical)
-                            .padding()
-                            .background(.blue.opacity(0.2))
-                            .cornerRadius(5.0)
-                            .focused($focusedField, equals: .token)
-
-              
+                    .padding()
+                    .background(.blue.opacity(0.2))
+                    .cornerRadius(5.0)
+                    .focused($focusedField, equals: .token)
+                
+                
             }
             .padding(.horizontal)
             .onAppear{
@@ -58,7 +58,7 @@ struct AppTokenView: View {
             }
             
             Button(action: {
-                 
+                
                 setAppToken()
                 
             }) {
@@ -73,11 +73,11 @@ struct AppTokenView: View {
         }
         
         .frame(
-              minWidth: 0,
-              maxWidth: .infinity,
-              minHeight: 0,
-              maxHeight: .infinity,
-              alignment: .topLeading
+            minWidth: 0,
+            maxWidth: .infinity,
+            minHeight: 0,
+            maxHeight: .infinity,
+            alignment: .topLeading
         )
         //.background(Color.white)
         
@@ -94,7 +94,7 @@ struct AppTokenView: View {
                 print("app token default action…")
             }
         }
-         
+        
         .alert(isPresented: $showingAlert) {
             
             Alert(title: Text("AppKey"),
@@ -102,36 +102,54 @@ struct AppTokenView: View {
                   dismissButton: .default(Text("Got it!"))
             )
             
-           
+            
         }
-         
+        
     }
     
     func setAppToken()  {
         Task{
             appState.loading = true
             
-           
+            let tokenTrim = token.trimmingCharacters(in: CharacterSet.whitespaces)
             
-            let defaults = UserDefaults.standard
-            defaults.set(token, forKey: "appToken")
-            
-            do {
-                if let app = try await API.getApp() {
+            if !tokenTrim.isEmpty {
+                
+                AppKeyAPIManager.shared.configure(appToken: tokenTrim,
+                                                  appKeyRestAddress: Constants.API_URL_ADDRESS)
+                
+                do {
+                    if let app = try await AppKeyAPI.getApp() {
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set(tokenTrim, forKey: "appToken")
+                        
+                        print("setAppToken  app ", app)
+                        
+                        self.appState.application = app
+                        self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled
+                        
+                        loadingStatus = "Your application is \(app.name)"
+                        showingAlert.toggle()
+                    }
+                }
+                catch {
+                    loadingStatus = "Invalid App Token"
+                    token = ""
                     
-                    print("setAppToken  app ", app)
+                    let defaults = UserDefaults.standard
+                    let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
                     
-                    self.appState.application = app
-                    self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled
+                    AppKeyAPIManager.shared.configure(appToken: appToken,
+                                                      appKeyRestAddress: Constants.API_URL_ADDRESS)
                     
-                    loadingStatus = "Your application is \(app.name)"
+                    let _ = try await AppKeyAPI.getApp()
+                    
                     showingAlert.toggle()
                 }
             }
-            catch {
-                loadingStatus = "Invalid App Token"
-                showingAlert.toggle()
-            }
+            
+
             
             focusedField = nil
             appState.loading = false

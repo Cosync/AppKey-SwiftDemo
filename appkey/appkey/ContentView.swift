@@ -11,6 +11,15 @@ import AuthenticationServices
 struct ContentView: View {
    
    @EnvironmentObject var appState: AppState
+    
+    init() {
+        let defaults = UserDefaults.standard
+        let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+        
+        AppKeyAPIManager.shared.configure(appToken: appToken,
+                                          appKeyRestAddress: Constants.API_URL_ADDRESS)
+
+    }
    
    var body: some View {
        ZStack{

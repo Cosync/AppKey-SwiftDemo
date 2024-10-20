@@ -1,14 +1,31 @@
 //
-//  APIRequestError.swift
+//  AppKeyError.swift
 //  appkey
+//
+//  Licensed to the Apache Software Foundation (ASF) under one
+//  or more contributor license agreements.  See the NOTICE file
+//  distributed with this work for additional information
+//  regarding copyright ownership.  The ASF licenses this file
+//  to you under the Apache License, Version 2.0 (the
+//  "License"); you may not use this file except in compliance
+//  with the License.  You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing,
+//  software distributed under the License is distributed on an
+//  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+//  KIND, either express or implied.  See the License for the
+//  specific language governing permissions and limitations
+//  under the License.
 //
 //  Created by Tola Voeung on 8/10/24.
 //
 
 import Foundation
 
-public enum APIRequestError: Error {
-    case cosyncAuthConfiguration
+public enum AppKeyError: Error {
+    case appKeyConfiguration
     case invalidAppToken                // 400
     case appNoLongerExist               // 401
     case appSuspended                   // 402
@@ -47,7 +64,7 @@ public enum APIRequestError: Error {
     
     public var message: String {
         switch self {
-        case .cosyncAuthConfiguration:
+        case .appKeyConfiguration:
             return "invalid api configuration"
         case .invalidAppToken:
             return "invalid app token"
@@ -87,7 +104,6 @@ public enum APIRequestError: Error {
             return "account does not exist"
         case .invalidMetaData:
             return "invalid metadata"
-       
         case .anonymousLoginNotSupported:
             return "app does not support anonymous login"
         case .appIsMirgrated:
@@ -135,90 +151,90 @@ public enum APIRequestError: Error {
                         switch code {
 
                         case 400:
-                            throw APIRequestError.invalidAppToken
+                            throw AppKeyError.invalidAppToken
                         case 401:
-                            throw APIRequestError.appNoLongerExist
+                            throw AppKeyError.appNoLongerExist
                         case 402:
-                            throw APIRequestError.appSuspended
+                            throw AppKeyError.appSuspended
                         case 403:
-                            throw APIRequestError.missingParameter
+                            throw AppKeyError.missingParameter
                         case 404:
-                            throw APIRequestError.accountSuspended
+                            throw AppKeyError.accountSuspended
                         case 405:
-                            throw APIRequestError.invalidAccessToken
+                            throw AppKeyError.invalidAccessToken
                         case 406:
-                            throw APIRequestError.appInviteNotSupported
+                            throw AppKeyError.appInviteNotSupported
                         case 407:
-                            throw APIRequestError.appSignupNotSupported
+                            throw AppKeyError.appSignupNotSupported
                         case 408:
-                            throw APIRequestError.appGoogle2FactorNotSupported
+                            throw AppKeyError.appGoogle2FactorNotSupported
                         case 409:
-                            throw APIRequestError.appPhone2FactorNotSupported
+                            throw AppKeyError.appPhone2FactorNotSupported
                         case 410:
-                            throw APIRequestError.appUserPhoneNotVerified
+                            throw AppKeyError.appUserPhoneNotVerified
                         case 411:
-                            throw APIRequestError.expiredSignupCode
+                            throw AppKeyError.expiredSignupCode
                         case 412:
-                            throw APIRequestError.phoneNumberInUse
+                            throw AppKeyError.phoneNumberInUse
                         case 413:
-                            throw APIRequestError.appIsMirgrated
+                            throw AppKeyError.appIsMirgrated
                         case 414:
-                            throw APIRequestError.anonymousLoginNotSupported
+                            throw AppKeyError.anonymousLoginNotSupported
                         case 415:
-                            throw APIRequestError.appleLoginNotSupported
+                            throw AppKeyError.appleLoginNotSupported
                         case 416:
-                            throw APIRequestError.googleLoginNotSupported
+                            throw AppKeyError.googleLoginNotSupported
                         case 500:
-                            throw APIRequestError.internalServerError
+                            throw AppKeyError.internalServerError
                         case 600:
-                            throw APIRequestError.invalidLoginCredentials
+                            throw AppKeyError.invalidLoginCredentials
                         case 601:
-                            throw APIRequestError.handleAlreadyRegistered
+                            throw AppKeyError.handleAlreadyRegistered
                         case 602:
-                            throw APIRequestError.invalidData
+                            throw AppKeyError.invalidData
                         case 603:
-                            throw APIRequestError.accountDoesNotExist
+                            throw AppKeyError.accountDoesNotExist
                         case 604:
-                            throw APIRequestError.invalidMetaData
+                            throw AppKeyError.invalidMetaData
                         case 605:
-                            throw APIRequestError.userNameAlreadyInUse
+                            throw AppKeyError.userNameAlreadyInUse
                         case 606:
-                            throw APIRequestError.appIsNotSupporUserName
+                            throw AppKeyError.appIsNotSupporUserName
                         case 607:
-                            throw APIRequestError.userNameDoesNotExist
+                            throw AppKeyError.userNameDoesNotExist
                         case 608:
-                            throw APIRequestError.accountIsNotVerify
+                            throw AppKeyError.accountIsNotVerify
                         case 609:
-                            throw APIRequestError.invalidLocale
+                            throw AppKeyError.invalidLocale
                         case 610:
-                            throw APIRequestError.emailAccountExists
+                            throw AppKeyError.emailAccountExists
                         case 611:
-                            throw APIRequestError.appleAccountExists
+                            throw AppKeyError.appleAccountExists
                         case 612:
-                            throw APIRequestError.googleAccountExists
+                            throw AppKeyError.googleAccountExists
                         case 613:
-                            throw APIRequestError.invalidToken
+                            throw AppKeyError.invalidToken
                         case 614:
-                            throw APIRequestError.passkeyNotExist
+                            throw AppKeyError.passkeyNotExist
                         case 615:
-                            throw APIRequestError.invalidPasskey
+                            throw AppKeyError.invalidPasskey
                        
 
                         default:
-                            throw APIRequestError.internalServerError
+                            throw AppKeyError.internalServerError
                         }
                     } else {
-                        throw APIRequestError.internalServerError
+                        throw AppKeyError.internalServerError
                     }
                 } else {
-                    throw APIRequestError.internalServerError
+                    throw AppKeyError.internalServerError
                 }
 
             } else if httpResponse.statusCode == 500 {
-                throw APIRequestError.internalServerError
+                throw AppKeyError.internalServerError
             }
         }
-        throw APIRequestError.internalServerError
+        throw AppKeyError.internalServerError
     }
 }
 

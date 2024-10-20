@@ -1,86 +1,108 @@
 //
-//  DataModel.swift
+//  AKDataModel.swift
 //  appkey
+//
+//  Licensed to the Apache Software Foundation (ASF) under one
+//  or more contributor license agreements.  See the NOTICE file
+//  distributed with this work for additional information
+//  regarding copyright ownership.  The ASF licenses this file
+//  to you under the Apache License, Version 2.0 (the
+//  "License"); you may not use this file except in compliance
+//  with the License.  You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing,
+//  software distributed under the License is distributed on an
+//  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+//  KIND, either express or implied.  See the License for the
+//  specific language governing permissions and limitations
+//  under the License.
 //
 //  Created by Tola Voeung on 8/10/24.
 //
 
 import Foundation
 
-public struct User:Codable {
+@available(macOS 13.0, *)
+public struct AKUser:Codable {
     var id:String = ""
     var name:String = ""
     var displayName:String = ""
     var handle: String = ""
 }
 
- 
-struct LoginChallenge:Decodable {
+@available(macOS 13.0, *)
+public struct AKLoginChallenge:Decodable {
     
-     
+    
     var rpId: String
     var challenge:String
-    var allowCredentials: [Credential]
+    var allowCredentials: [AKCredential]
     var timeout: Int
     var userVerification: String
     var requireAddPasskey:Bool?
 }
 
-struct Credential: Decodable {
+@available(macOS 13.0, *)
+public struct AKCredential: Decodable {
     var id:String
     var type:String
 }
 
-
-struct Register: Decodable {
+@available(macOS 13.0, *)
+public struct AKRegister: Decodable {
     var status:Bool
     var message: String
-    var user: User
+    var user: AKUser
 }
 
-struct ErrorReturn: Decodable {
+@available(macOS 13.0, *)
+public struct AKErrorReturn: Decodable {
     var code:Bool
     var message: String
 }
 
-
-
-struct SignupChallenge: Decodable {
+@available(macOS 13.0, *)
+public struct AKSignupChallenge: Decodable {
     var challenge:String
-    var user: User
+    var user: AKUser
 }
 
-struct AttestReponse:Codable {
+@available(macOS 13.0, *)
+public struct AKAttestReponse:Codable {
     var attestationObject:String
     var clientDataJSON:String
 }
 
-struct Attestation:Codable {
+@available(macOS 13.0, *)
+public struct AKAttestation:Codable {
     var id:String
     var rawId:String?
     var authenticatorAttachment:String?
     var type:String?
-    var response:AttestReponse
+    var response:AKAttestReponse
 }
 
-
-struct Assertion:Codable {
+@available(macOS 13.0, *)
+public struct AKAssertion:Codable {
     var id:String
     var rawId:String?
     var authenticatorAttachment:String?
     var type:String?
-    var response:AssertResponse
+    var response:AKAssertResponse
 }
 
-
-struct AssertResponse:Codable {
+@available(macOS 13.0, *)
+public struct AKAssertResponse:Codable {
     var authenticatorData:String
     var clientDataJSON:String
     var signature:String
     var userHandle:String
 }
 
-struct AuthenticationInfo:Decodable {
+@available(macOS 13.0, *)
+public struct AKAuthenticationInfo:Decodable {
     let newCounter:Int
     let credentialID:String
     let userVerified:Bool
@@ -90,8 +112,8 @@ struct AuthenticationInfo:Decodable {
     let rpID:String
 }
 
-
-struct Application:Codable {
+@available(macOS 13.0, *)
+public struct Application:Codable {
     let appId:String
     let displayAppId:String
     let name:String
@@ -106,12 +128,11 @@ struct Application:Codable {
     let userNamesEnabled:Bool
     let userJWTExpiration:Int
     let locales:[String]
-   
+    
 }
 
-
-
-struct AppUser:Codable {
+@available(macOS 13.0, *)
+public struct AppUser:Codable {
     let appUserId:String
     let displayName:String
     let handle:String
@@ -125,17 +146,15 @@ struct AppUser:Codable {
     let lastLogin: String?
 }
 
-
-struct SignupData:Codable {
-     
+@available(macOS 13.0, *)
+public struct SignupData:Codable {
+    
     let handle:String
     let message:String
     var signUpToken:String?
 }
 
-
-
-
+@available(macOS 13.0, *)
 struct Passkey:Codable {
     let id:String
     let publicKey:String
@@ -147,13 +166,13 @@ struct Passkey:Codable {
     let lastUsed: Date
     let createdAt: Date
     let updatedAt: Date
-   
+    
 }
 
-
+@available(macOS 13.0, *)
 struct LoginComplete:Decodable {
     let verified:Bool
-    let authenticationInfo:AuthenticationInfo
-   
+    let authenticationInfo:AKAuthenticationInfo
+    
 }
- 
+

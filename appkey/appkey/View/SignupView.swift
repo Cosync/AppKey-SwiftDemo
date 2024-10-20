@@ -11,7 +11,7 @@ import os
 
 struct SignupView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var apiManager = APIManager.shared
+    @StateObject private var apiManager = AppKeyAPIManager.shared
     
     @State private var handle = ""
     @State private var displayName = ""
@@ -19,7 +19,7 @@ struct SignupView: View {
     @State private var locale = "EN"
     @State private var username = ""
     
-    @StateObject private var pkManager = PasskeysManager.shared
+    @StateObject private var pkManager = AKPasskeysManager.shared
     @State var loading = false
     @State var loadingStatus = ""
     @State var showingAlert = false
@@ -238,7 +238,7 @@ struct SignupView: View {
             if let attestation = pkManager.attestation {
                 loadingStatus = "verify server challenge"
                 
-                let signData = try await API.signupConfirm(handle: handle, attest: attestation)
+                let signData = try await AppKeyAPI.signupConfirm(handle: handle, attest: attestation)
                     
                 appState.loading = false
                 
@@ -279,7 +279,7 @@ struct SignupView: View {
             loadingStatus = "getting server challenge"
             appState.loading = true
             do {
-                if let response = try await API.signup(handle: handle, displayName:displayName){
+                if let response = try await AppKeyAPI.signup(handle: handle, displayName:displayName){
                            
                     let userId = response.user.id
                     let keyUserName = response.user.name
@@ -296,7 +296,7 @@ struct SignupView: View {
                 
                 appState.loading = false
             }
-            catch let error as APIRequestError {
+            catch let error as AppKeyError {
                 
                 appState.loading = false
                 loadingStatus = error.message
@@ -319,7 +319,7 @@ struct SignupView: View {
             loadingStatus = "verify account"
             appState.loading = true
             do {
-                let user = try await API.signupComplete(signupToken: signupToken, code:code)
+                let user = try await AppKeyAPI.signupComplete(signupToken: signupToken, code:code)
                 appState.loading = false
                 
                 if apiManager.application?.userNamesEnabled == true {
@@ -328,7 +328,7 @@ struct SignupView: View {
                 else { appState.target = .loggedIn }
                 
             }
-            catch let error as APIRequestError {
+            catch let error as AppKeyError {
                 appState.loading = false
                 loadingStatus = error.message
                 showingAlert.toggle()

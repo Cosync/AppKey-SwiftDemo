@@ -13,7 +13,7 @@ import os
 
 struct VerifyView: View {
     @State private var email = ""
-    @StateObject private var pkManager = PasskeysManager.shared
+    @StateObject private var pkManager = AKPasskeysManager.shared
     @EnvironmentObject var appState: AppState
     @State var loadingStatus = ""
     @State var showingAlert = false
@@ -117,7 +117,7 @@ struct VerifyView: View {
                     
                     do{
                         
-                        let result = try await API.verifyComplete(handle: email, assertion: assert)
+                        let result = try await AppKeyAPI.verifyComplete(handle: email, assertion: assert)
                         logger.log("verify Complete result \(result)")
                         
                         loadingStatus = result ? "Successed Verification" : "Failed Verification"
@@ -126,7 +126,7 @@ struct VerifyView: View {
                         appState.loading = false
                         
                     }
-                    catch let error as APIRequestError {
+                    catch let error as AppKeyError {
                         logger.log("verify Complete error \(error.message)")
                         appState.loading = false
                         loadingStatus = error.message
@@ -192,7 +192,7 @@ struct VerifyView: View {
                 appState.loading.toggle()
  
                 
-                if let response = try await API.verify(handle: email){
+                if let response = try await AppKeyAPI.verify(handle: email){
                     
                  
                     
@@ -213,7 +213,7 @@ struct VerifyView: View {
                 }
                 
             }
-            catch let error as APIRequestError {
+            catch let error as AppKeyError {
                 appState.loading = false
                 loadingStatus = error.message
                 showingAlert.toggle()

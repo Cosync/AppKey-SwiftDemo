@@ -10,7 +10,7 @@ import SwiftUI
 struct LoggedInView: View {
     
     @EnvironmentObject var appState: AppState
-    @StateObject private var apiManager = APIManager.shared
+    @StateObject private var apiManager = AppKeyAPIManager.shared
     
     var body: some View {
         VStack{
