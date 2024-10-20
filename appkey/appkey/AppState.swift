@@ -8,6 +8,7 @@
  
 
 import Foundation
+import AppKeySwift
 
 // View table used for routing. Updated when a new view is added
 enum TargetUI: Int {

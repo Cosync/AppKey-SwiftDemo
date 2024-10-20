@@ -8,6 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 import os
+import AppKeySwift
 
 struct SignupView: View {
     @EnvironmentObject var appState: AppState

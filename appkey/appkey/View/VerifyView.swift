@@ -9,6 +9,7 @@
 import SwiftUI
 import AuthenticationServices
 import os
+import AppKeySwift
 
 
 struct VerifyView: View {

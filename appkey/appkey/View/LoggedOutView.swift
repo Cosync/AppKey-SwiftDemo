@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
+import AppKeySwift
 
 struct LoggedOutView: View {
    

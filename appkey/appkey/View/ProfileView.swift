@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppKeySwift
 
 struct ProfileView: View {
     @EnvironmentObject var appState: AppState
