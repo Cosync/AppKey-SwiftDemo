@@ -30,7 +30,7 @@ class AppState: ObservableObject {
     @Published var error = ""
     @Published var success = ""
     @Published var welcomeText = ""
-    @Published var application:Application?
+    @Published var application:AKApplication?
     @Published var anonymousLoginEnabled = false
     @Published var tabSelection = "Login"
 }
