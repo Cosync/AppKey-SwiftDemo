@@ -82,7 +82,7 @@ struct SetUsernameView: View {
         }
         .padding()
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Alert."),
+            Alert(title: Text("AppKey."),
                   message: Text("\(message)"))
         }
     }

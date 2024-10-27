@@ -19,7 +19,7 @@ struct VerifyView: View {
     @State var loadingStatus = ""
     @State var showingAlert = false
   
-    let logger = Logger()
+ 
     
     enum Field {
         case handle
@@ -118,24 +118,24 @@ struct VerifyView: View {
                     
                     do{
                         
-                        let result = try await AppKeyAPI.verifyComplete(handle: email, assertion: assert)
-                        logger.log("verify Complete result \(result)")
+                        let _ = try await AppKeyAPI.verifyComplete(handle: email, assertion: assert)
+                    
                         
-                        loadingStatus = result ? "Successed Verification" : "Failed Verification"
+                        loadingStatus = "Successed Verification"
                         showingAlert.toggle()
                         
                         appState.loading = false
                         
                     }
                     catch let error as AppKeyError {
-                        logger.log("verify Complete error \(error.message)")
+                        
                         appState.loading = false
                         loadingStatus = error.message
                         showingAlert.toggle()
                         
                     }
                     catch {
-                        logger.log("verify Complete error \(error.localizedDescription)")
+                        
                         appState.loading = false
                         loadingStatus = error.localizedDescription
                         showingAlert.toggle()
@@ -169,9 +169,7 @@ struct VerifyView: View {
             Alert(title: Text("AppKey"),
                   message: Text("\(loadingStatus)"),
                   dismissButton: .default(Text("Got it!"))
-            )
-            
-           
+            ) 
         }
          
     }
@@ -218,13 +216,13 @@ struct VerifyView: View {
                 appState.loading = false
                 loadingStatus = error.message
                 showingAlert.toggle()
-                logger.error("login error \(error.localizedDescription)")
+                
             }
             catch  {
                 appState.loading = false
                 loadingStatus = error.localizedDescription
                 showingAlert.toggle()
-                logger.error("login error \(error.localizedDescription)")
+                 
             }
         }
     }

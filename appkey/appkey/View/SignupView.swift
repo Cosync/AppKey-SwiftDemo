@@ -320,7 +320,7 @@ struct SignupView: View {
             loadingStatus = "verify account"
             appState.loading = true
             do {
-                let user = try await AppKeyAPI.signupComplete(signupToken: signupToken, code:code)
+                let _ = try await AppKeyAPI.signupComplete(signupToken: signupToken, code:code)
                 appState.loading = false
                 
                 if apiManager.application?.userNamesEnabled == true {

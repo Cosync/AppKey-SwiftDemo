@@ -423,7 +423,7 @@
 			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.14;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

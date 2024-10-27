@@ -1,0 +1,15 @@
+{
+  "originHash" : "60cbae670b818a65b1dda7ddd30e3315c669855070989025cedbccc3264d50de",
+  "pins" : [
+    {
+      "identity" : "appkeyswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Cosync/AppKeySwift.git",
+      "state" : {
+        "revision" : "d1c65a4f0f5784f8d9101557927d23f2362c16b7",
+        "version" : "1.0.14"
+      }
+    }
+  ],
+  "version" : 3
+}

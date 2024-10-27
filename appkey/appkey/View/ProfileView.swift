@@ -7,11 +7,19 @@
 
 import SwiftUI
 import AppKeySwift
+import AuthenticationServices
+import os
 
 struct ProfileView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var apiManager = AppKeyAPIManager.shared
     @State private var locale:String = "EN"
+    @State private var isDeleteUser:Bool = false
+    @StateObject private var pkManager = AKPasskeysManager.shared
+    @State var loadingStatus = ""
+    @State var showingAlert = false
+  
+    
     var body: some View {
         VStack{
             if let appUser = apiManager.appUser {
@@ -51,6 +59,22 @@ struct ProfileView: View {
             Spacer().frame(height: 50)
             
             Button(action: {
+                isDeleteUser.toggle()
+            }) {
+                Text("Delete Account")
+                    .padding(.horizontal)
+                Image(systemName: "trash.square.fill")
+            }
+            .padding()
+            .foregroundColor(Color.white)
+            .background(Color.red)
+            .cornerRadius(8)
+            
+            
+            Spacer().frame(height: 50)
+            
+            Button(action: {
+                apiManager.logout()
                 appState.target = .loggedOut
             }) {
                 Text("Logout")
@@ -70,11 +94,137 @@ struct ProfileView: View {
             else {
                 self.locale = "EN"
             }
+             
+        }
+        .alert(isPresented: $showingAlert) {
             
+            Alert(title: Text("AppKey"),
+                  message: Text("\(loadingStatus)"),
+                  dismissButton: .default(Text("Got it!"))
+            )
+        }
+        .alert(isPresented: $isDeleteUser) {
+            Alert(
+                title: Text("AppKey Delete Account"),
+                message: Text("Are you sure to delete your account?"),
+                primaryButton: .default(
+                    Text("Cancel")
+                    
+                ),
+                secondaryButton: .destructive(
+                    Text("Delete"),
+                    action: {
+                        verify()
+                    }
+                )
+            )
+           
+        }
+        .onChange(of: pkManager.assertionnResponse) {
             
+          
+            
+            Task {
+                if let assert = pkManager.assertion, assert.id != "" {
+                    loadingStatus = "verify server challenge"
+                    
+                    do{
+                        
+                        let verifyComplete = try await AppKeyAPI.verifyComplete(handle: apiManager.appUser!.handle, assertion: assert)
+                        print("verifyComplete \(verifyComplete)")
+                        
+                        let _ = try await apiManager.deleteAccount()
+                        
+                        appState.loading = false
+                        
+                        apiManager.logout()
+                        appState.target = .loggedOut
+                       
+                        
+                    }
+                    catch let error as AppKeyError {
+                       
+                        appState.loading = false
+                        loadingStatus = error.message
+                        showingAlert.toggle()
+                        
+                    }
+                    catch {
+                        
+                        appState.loading = false
+                        loadingStatus = error.localizedDescription
+                        showingAlert.toggle()
+                        
+                    }
+                }
+                
+            }
+        }
+        .onChange(of: pkManager.errorResponse) {
+            
+            appState.loading = false
+            loadingStatus = pkManager.errorResponse ?? "Error Key"
+            showingAlert.toggle()
+        }
+        .onChange(of: pkManager.status) {
+            if pkManager.status != "success" {
+                appState.loading = false
+                
+                if pkManager.status == "error" {
+                    loadingStatus = "Invalid Authorization"
+                    showingAlert.toggle()
+                }
+                
+            }
+           
             
         }
     }
+    
+    
+    
+    func verify()  {
+        Task{
+            do{
+                 
+            
+                appState.loading.toggle()
+ 
+                
+                if let response = try await AppKeyAPI.verify(handle: apiManager.appUser!.handle){
+                    if let challengeData = response.challenge.decodeBase64Url {
+                        
+                        let allowedCredentials = response.allowCredentials.map{$0.id}
+                        pkManager.signInWith(anchor: ASPresentationAnchor(), challenge: challengeData, allowedCredentials: allowedCredentials, relyingParty: Constants.RELYING_PARTY_ID, preferImmediatelyAvailableCredentials: false)
+                    }
+                    else {
+                        appState.loading = false
+                        loadingStatus = "Invalid Challenge Data"
+                        showingAlert.toggle()
+                    }
+                    
+                }
+                else {
+                    appState.loading = false
+                }
+                
+            }
+            catch let error as AppKeyError {
+                appState.loading = false
+                loadingStatus = error.message
+                showingAlert.toggle()
+                
+            }
+            catch  {
+                appState.loading = false
+                loadingStatus = error.localizedDescription
+                showingAlert.toggle()
+                
+            }
+        }
+    }
+    
+     
 }
 
 #Preview {
