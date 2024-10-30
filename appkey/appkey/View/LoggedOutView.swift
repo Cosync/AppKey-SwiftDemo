@@ -8,6 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 import AppKeySwift
+import AppKeyGoogleAuth
 
 struct LoggedOutView: View {
    
@@ -128,6 +129,10 @@ struct LoggedOutView: View {
                        
                        self.appState.application = app;
                        self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled;
+//                       
+//                       if let googleClientId = app.googleClientId, app.googleLoginEnabled {
+//                           AppKeyGoogleAuth.shared.configure(googleClientID:googleClientId)
+//                       }
                    }
                    self.appState.loading = false
                }

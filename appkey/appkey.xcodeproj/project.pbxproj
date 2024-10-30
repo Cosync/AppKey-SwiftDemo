@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08B414022CC59A2A00262AD5 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 08B414012CC59A2A00262AD5 /* AppKeySwift */; };
 		52868D802CC2319F007AFD85 /* AppTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52868D7F2CC2319E007AFD85 /* AppTokenView.swift */; };
 		52CAA8A02CB5078C00B647E9 /* appkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */; };
 		52CAA8A22CB5078C00B647E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8A12CB5078C00B647E9 /* ContentView.swift */; };
@@ -23,6 +22,19 @@
 		52CAA8C72CB5088D00B647E9 /* ExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8C62CB5088D00B647E9 /* ExtensionManager.swift */; };
 		52CAA8C92CB508B100B647E9 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8C82CB508B100B647E9 /* AppState.swift */; };
 		52CAA8CB2CB508CA00B647E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8CA2CB508CA00B647E9 /* Constants.swift */; };
+		52DE24292CD0CBC2003E1708 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24282CD0CBC2003E1708 /* GoogleSignIn */; };
+		52DE242B2CD0CBC2003E1708 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE242A2CD0CBC2003E1708 /* GoogleSignInSwift */; };
+		52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE242D2CD0D0FA003E1708 /* AppKeySwift */; };
+		52DE24312CD0DAB6003E1708 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24302CD0DAB6003E1708 /* GoogleSignIn */; };
+		52DE24332CD0DAB6003E1708 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24322CD0DAB6003E1708 /* GoogleSignInSwift */; };
+		52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24352CD218E4003E1708 /* AppKeyGoogleAuth */; };
+		52DE24382CD218E4003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24372CD218E4003E1708 /* AppKeySwift */; };
+		52DE243B2CD2192C003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE243A2CD2192C003E1708 /* AppKeyGoogleAuth */; };
+		52DE243D2CD2192C003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE243C2CD2192C003E1708 /* AppKeySwift */; };
+		52DE24412CD228CB003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24402CD228CB003E1708 /* AppKeyGoogleAuth */; };
+		52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24422CD228CB003E1708 /* AppKeySwift */; };
+		52DE24462CD22907003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24452CD22907003E1708 /* AppKeyGoogleAuth */; };
+		52DE24482CD22907003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24472CD22907003E1708 /* AppKeySwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +55,7 @@
 		52CAA8C62CB5088D00B647E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		52CAA8C82CB508B100B647E9 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		52CAA8CA2CB508CA00B647E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		52DE243E2CD22047003E1708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +63,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08B414022CC59A2A00262AD5 /* AppKeySwift in Frameworks */,
+				52DE24332CD0DAB6003E1708 /* GoogleSignInSwift in Frameworks */,
+				52DE243B2CD2192C003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52DE242B2CD0CBC2003E1708 /* GoogleSignInSwift in Frameworks */,
+				52DE24482CD22907003E1708 /* AppKeySwift in Frameworks */,
+				52DE24412CD228CB003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52DE24382CD218E4003E1708 /* AppKeySwift in Frameworks */,
+				52DE24462CD22907003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52DE24312CD0DAB6003E1708 /* GoogleSignIn in Frameworks */,
+				52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */,
+				52DE24292CD0CBC2003E1708 /* GoogleSignIn in Frameworks */,
+				52DE243D2CD2192C003E1708 /* AppKeySwift in Frameworks */,
+				52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */,
+				52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +101,7 @@
 		52CAA89E2CB5078C00B647E9 /* appkey */ = {
 			isa = PBXGroup;
 			children = (
+				52DE243E2CD22047003E1708 /* Info.plist */,
 				52CAA8AE2CB507DB00B647E9 /* View */,
 				52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */,
 				52CAA8A12CB5078C00B647E9 /* ContentView.swift */,
@@ -157,7 +183,7 @@
 			);
 			mainGroup = 52CAA8932CB5078C00B647E9;
 			packageReferences = (
-				08B414002CC59A2A00262AD5 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
+				52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
 			);
 			productRefGroup = 52CAA89D2CB5078C00B647E9 /* Products */;
 			projectDirPath = "";
@@ -331,6 +357,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = appkey/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -369,6 +396,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = appkey/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -418,20 +446,89 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		08B414002CC59A2A00262AD5 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+		52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.14;
+				minimumVersion = 1.0.15;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		08B414012CC59A2A00262AD5 /* AppKeySwift */ = {
+		52DE24282CD0CBC2003E1708 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 08B414002CC59A2A00262AD5 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			package = 52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		52DE242A2CD0CBC2003E1708 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		52DE242D2CD0D0FA003E1708 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52DE24302CD0DAB6003E1708 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		52DE24322CD0DAB6003E1708 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		52DE24352CD218E4003E1708 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52DE24372CD218E4003E1708 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52DE243A2CD2192C003E1708 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52DE243C2CD2192C003E1708 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52DE24402CD228CB003E1708 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52DE24422CD228CB003E1708 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52DE24452CD22907003E1708 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52DE24472CD22907003E1708 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeySwift;
 		};
 /* End XCSwiftPackageProductDependency section */

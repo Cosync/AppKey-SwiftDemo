@@ -7,13 +7,19 @@
 
 import SwiftUI
 import AuthenticationServices
-import os
 import AppKeySwift
+import AppKeyGoogleAuth
+import GoogleSignInSwift
 
 
 struct LoginView: View {
     @State private var email = ""
+    @State private var provider = ""
+    
     @StateObject private var pkManager = AKPasskeysManager.shared
+    @StateObject private var apiManager = AppKeyAPIManager.shared
+    @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
+    
     @EnvironmentObject var appState: AppState
     @State var loadingStatus = ""
     @State var showingAlert = false
@@ -21,8 +27,13 @@ struct LoginView: View {
     @State var isNoPasskey = false
     @State var anonymousLoginEnabled = false
     @State var signupChallenge:AKSignupChallenge?
+    @State private var socialLogin: Bool = true
+    @State private var isGoogleLogin: Bool = true
+    @State private var isAppleLogin: Bool = true
+    @State private var idToken = ""
     
-    let logger = Logger()
+    @State private var message: AlertMessage? = nil
+ 
     
     enum Field {
         case handle
@@ -72,52 +83,77 @@ struct LoginView: View {
                 }
             }
             
-            
-            Button(action: {
-                 
-                 login()
+            VStack{
                 
-            }) {
-                Text("Login")
-                    .padding(.horizontal)
-                Image(systemName: "arrow.right.square")
-            }
-            .padding()
-            .foregroundColor(Color.white)
-            .background(Color.green)
-            .cornerRadius(8)
-            
-            
-            if anonymousLoginEnabled  {
                 Button(action: {
-                    loginAnonymous()
+                     
+                     login()
+                    
                 }) {
-                    Text("Anonymous Login")
+                    Text("Login")
                         .padding(.horizontal)
                     Image(systemName: "arrow.right.square")
                 }
                 .padding()
                 .foregroundColor(Color.white)
-                .background(Color.blue)
+                .background(Color.green)
                 .cornerRadius(8)
+            
+            
+                if anonymousLoginEnabled  {
+                    Button(action: {
+                        loginAnonymous()
+                    }) {
+                        Text("Anonymous Login")
+                            .padding(.horizontal)
+                        Image(systemName: "arrow.right.square")
+                    }
+                    .padding()
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+                }
+            
+                if socialLogin {
+                    VStack (spacing: 10){
+                        Text("Or").font(.caption)
+                            .foregroundColor(.blue)
+                        
+                        if isGoogleLogin == true {
+                                                    GoogleSignInButton( scheme: GoogleSignInButtonColorScheme.light,
+                                                                        style: GoogleSignInButtonStyle.wide,
+                                                                        action: handleGoogleSignInButton)
+                                                    .frame(minWidth: 150, maxWidth: 200, minHeight:50 , maxHeight: 70)
+                            
+                        }
+                        
+                        if isAppleLogin == true {
+                            SignInWithAppleButton(.signIn,              //1 .signin, or .continue or .signUp for button label
+                                                  onRequest: { (request) in             //2
+                                //Set up request
+                                request.requestedScopes = [.fullName, .email]
+                            },
+                                                  onCompletion: { result in
+                                switch result {
+                                case .success(let authResults):
+                                    handleAppleSignInButton(authorization:authResults)
+                                case .failure(let error):
+                                    print("Authorisation failed: \(error.localizedDescription)")
+                                    self.showLoginError(message: error.localizedDescription)
+                                }
+                            })
+                            .signInWithAppleButtonStyle(.whiteOutline) // .black, .white and .whiteOutline
+                            .frame(minWidth: 150, maxWidth: 200, minHeight:50, maxHeight:50)
+                            
+                        }
+                        
+                    }
+                    
+                }
             }
         
         }
         
-        .frame(
-              minWidth: 0,
-              maxWidth: .infinity,
-              minHeight: 0,
-              maxHeight: .infinity,
-              alignment: .topLeading
-        )
-        //.background(Color.white)
-        
-        .onTapGesture {
-            if (focusedField != nil) {
-                focusedField = nil
-            }
-        }
         .onSubmit {
             switch focusedField {
             case .handle:
@@ -144,7 +180,7 @@ struct LoginView: View {
                         loadingStatus = "verify server challenge"
                         
                         let response = try await AppKeyAPI.loginAnonymousComplete(handle: challengeData.user.handle, attest: attestation)
-                        logger.log("loginAnonymousComplete  response \(response)")
+                        print("loginAnonymousComplete  response \(response)")
                     
                         appState.loading = false
                         appState.target = .loggedIn
@@ -152,7 +188,7 @@ struct LoginView: View {
                     }
                 }
                 catch {
-                    logger.log("passkey  error  \(error.localizedDescription)")
+                    print("passkey  error  \(error.localizedDescription)")
                     appState.loading = false
                     
                     loadingStatus = "Invalid Request"
@@ -175,26 +211,26 @@ struct LoginView: View {
                     
                     do{
                         
-                        let user = try await AppKeyAPI.loginComplete(handle: email, assertion: assert)
-                        logger.log("Login Complete user \(user!.appUserId)")
+                        let user = try await apiManager.loginComplete(handle: email, assertion: assert)
+                        print("Login Complete user \(user!.appUserId)")
                         
                         appState.loading = false
                         
-                        if let application = AppKeyAPIManager.shared.application, application.userNamesEnabled, user?.userName == nil {
+                        if let application = apiManager.application, application.userNamesEnabled, user?.userName == nil {
                             appState.target = .loginUserName
                         }
                         else { appState.target = .loggedIn }
                         
                     }
                     catch let error as AppKeyError {
-                        logger.log("Login Complete error \(error.message)")
+                        print("Login Complete error \(error.message)")
                         appState.loading = false
                         loadingStatus = error.message
                         showingAlert.toggle()
                         
                     }
                     catch {
-                        logger.log("Login Complete error \(error.localizedDescription)")
+                        print("Login Complete error \(error.localizedDescription)")
                         appState.loading = false
                         loadingStatus = error.localizedDescription
                         showingAlert.toggle()
@@ -223,6 +259,21 @@ struct LoginView: View {
            
             
         }
+        .onChange(of: appKeyGoogleAuth.idToken) { _,token in
+            if token == "" {return}
+            
+            print("googleAuth User: \(appKeyGoogleAuth.givenName) \(appKeyGoogleAuth.familyName)")
+            print("googleAuth idToken: \(token)")
+           
+            self.googleLogin(token: token)
+            
+        }
+        .onChange(of: appKeyGoogleAuth.errorMessage) { _, message in
+            if message == "" {return}
+            print("cosyncGoogleAuth message: \(message)")
+            self.showLoginError(message: message)
+            
+        }
         .alert(isPresented: $showingAlert) {
             
             Alert(title: Text("AppKey"),
@@ -232,16 +283,150 @@ struct LoginView: View {
             
            
         }
-        .onChange(of: appState.anonymousLoginEnabled) {
-            anonymousLoginEnabled = appState.anonymousLoginEnabled
-        }
         .onAppear{
-            anonymousLoginEnabled = appState.anonymousLoginEnabled
+            Task{
+                let _ = try await apiManager.getApp()
+                
+                if let application = apiManager.application {
+                    
+                    anonymousLoginEnabled = application.anonymousLoginEnabled
+                    isAppleLogin = application.appleLoginEnabled
+                    isGoogleLogin = application.googleLoginEnabled
+                    
+                    if application.appleLoginEnabled == true || application.googleLoginEnabled == true {
+                        socialLogin = true
+                    }
+                    else {
+                        socialLogin = false
+                    }
+                }
+            }
         }
     }
     
     
+    func handleGoogleSignInButton() {
+      
+        self.appState.loading = true
+        appKeyGoogleAuth.signIn()
+    }
     
+    
+   
+   func googleLogin(token:String){
+       
+       Task { @MainActor in
+           do{
+               self.provider = "google"
+               let user = try await apiManager.socialLogin(token, provider: provider)
+               
+               if apiManager.application!.userNamesEnabled == true && (user.userName == "" || user.userName == nil) {
+                   self.appState.target = .loginUserName
+               }
+               else {
+                   self.appState.target = .loggedIn
+               }
+               
+               self.appState.loading = false
+               
+               
+           }
+           catch let error as AppKeyError {
+               if error == .accountDoesNotExist {
+                   self.signupSocialAccount(token: token, email: appKeyGoogleAuth.email, displayName: "\(appKeyGoogleAuth.givenName) \(appKeyGoogleAuth.familyName) ")
+               }
+               else {
+                   
+                   self.showLoginError(message: error.message)
+                   
+                    
+               }
+           }
+           
+       }
+   }
+    
+    func handleAppleSignInButton(authorization: ASAuthorization) {
+        
+        //Handle authorization
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+        let identityToken = appleIDCredential.identityToken,
+        let idToken = String(data: identityToken, encoding: .utf8)
+        else {
+            print("error");
+            self.showLoginError(message: "Apple Login Fails")
+            return
+        }
+       
+        self.appState.loading = true
+        
+        print("Apple token \(idToken)")
+        
+        self.idToken = idToken
+        self.email = appleIDCredential.email ?? ""
+        self.provider = "apple"
+  
+        // already login before
+        Task { @MainActor in
+            do {
+                let user = try await apiManager.socialLogin(self.idToken, provider: provider)
+                print("social log user \(user)")
+                
+                if apiManager.application!.userNamesEnabled == true && (user.userName == "" || user.userName == nil) {
+                    self.appState.target = .loginUserName
+                }
+                else {
+                    self.appState.target = .loggedIn
+                }
+                
+                self.appState.loading = false
+                
+            } catch let error as AppKeyError {
+                self.appState.loading = false
+                
+                if error == .accountDoesNotExist {
+                    
+                    print("\(String(describing: appleIDCredential.fullName))")
+                    
+                    if let name = appleIDCredential.fullName,
+                        let givenName = name.givenName,
+                        let familyName =  name.familyName {
+                        // new account
+                        signupSocialAccount(token: self.idToken, email: self.email, displayName: "\(givenName) \(familyName)")
+                        
+                    }
+                    else{
+                        let errorMessage = "App cannot access to your profile name. Please remove this AppKey in 'Sign with Apple' from your icloud setting and try again."
+                        self.showLoginError(message: errorMessage)
+                    }
+                }
+                else {
+                    let message = error.message
+                    self.showLoginError(message: message)
+                }
+            } catch {
+                self.showLoginInvalidParameters()
+                self.appState.loading = false
+            }
+            
+        }
+    
+      
+    }
+     
+    
+    func showLoginError(message: String){
+        self.appState.loading = false
+        self.loadingStatus = message
+        showingAlert.toggle()
+    }
+
+    func showLoginInvalidParameters(){
+        self.loadingStatus = "You have entered an invalid handle."
+        showingAlert.toggle()
+        
+       
+    }
     
     func login()  {
         Task{
@@ -291,13 +476,13 @@ struct LoginView: View {
                     showingAlert.toggle()
                 }
                 
-                logger.error("login error \(error.localizedDescription)")
+                print("login error \(error.localizedDescription)")
             }
             catch  {
                 appState.loading = false
                 loadingStatus = error.localizedDescription
                 showingAlert.toggle()
-                logger.error("login error \(error.localizedDescription)")
+                print("login error \(error.localizedDescription)")
             }
         }
     }
@@ -310,7 +495,7 @@ struct LoginView: View {
                 appState.loading.toggle()
  
                 let uuidString = UUID().uuidString
-                if let response = try await AppKeyAPI.loginAnonymous(uuidString: uuidString){
+                if let response = try await apiManager.loginAnonymous(uuidString: uuidString){
                     
                     signupChallenge = response
                     let userId = response.user.id
@@ -335,17 +520,59 @@ struct LoginView: View {
                 appState.loading = false
                 loadingStatus = error.message
                 showingAlert.toggle()
-                logger.error("login error \(error.localizedDescription)")
+                print("login error \(error.localizedDescription)")
             }
             catch  {
                 appState.loading = false
                 loadingStatus = error.localizedDescription
                 showingAlert.toggle()
-                logger.error("login error \(error.localizedDescription)")
+                print("login error \(error.localizedDescription)")
             }
         }
     }
     
+    
+    
+   
+    func signupSocialAccount(token:String, email:String, displayName:String)  {
+        
+        Task {
+            do {
+                
+                self.appState.loading = true
+                
+                let user = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName)
+                    
+                    
+                if let application = apiManager.application , application.userNamesEnabled {
+                    self.appState.target = .loginUserName
+                }
+                else {
+                    self.appState.target = .loggedIn
+                }
+                 
+                
+                self.appState.loading = false
+                
+            } catch let error as AppKeyError {
+                self.appState.loading = false
+                let message = error.message
+                print("signupSocialAccount error \(message)")
+                self.showLoginError(message: message)
+                
+            } catch {
+                self.appState.loading = false
+                let message = error.localizedDescription as String
+
+                print("signupSocialAccount error \(message)")
+                self.showLoginError(message: message)
+           
+            }
+            
+        }
+        
+    }
+     
  
 }
 

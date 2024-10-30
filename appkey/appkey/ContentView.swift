@@ -8,18 +8,20 @@
 import SwiftUI
 import AuthenticationServices
 import AppKeySwift
+import AppKeyGoogleAuth
 
 struct ContentView: View {
    
    @EnvironmentObject var appState: AppState
     
     init() {
-        let defaults = UserDefaults.standard
-        let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
+//        let defaults = UserDefaults.standard
+//        let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
         
-        AppKeyAPIManager.shared.configure(appToken: appToken,
+        AppKeyAPIManager.shared.configure(appToken: Constants.APP_TOKEN,
                                           appKeyRestAddress: Constants.API_URL_ADDRESS)
-
+        
+        AppKeyGoogleAuth.shared.configure(googleClientID:Constants.GOOGLE_CLIENT_ID)
     }
    
    var body: some View {
@@ -45,6 +47,10 @@ struct ContentView: View {
                        .foregroundColor(.blue)
                }
            }
+           
+       }
+       .onAppear{
+           UserDefaults.standard.removeObject(forKey: "appToken")
            
        }
    }
