@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
-import AppKeySwift
+ 
 import AuthenticationServices
-import os
+import AppKeySwift
+import AppKeyGoogleAuth
+import GoogleSignInSwift
+
 
 struct ProfileView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var apiManager = AppKeyAPIManager.shared
+    @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
     @State private var locale:String = "EN"
     @State private var isDeleteUser:Bool = false
     @StateObject private var pkManager = AKPasskeysManager.shared
@@ -114,16 +118,13 @@ struct ProfileView: View {
                 secondaryButton: .destructive(
                     Text("Delete"),
                     action: {
-                        verify()
+                        verifyAccount()
                     }
                 )
             )
            
         }
         .onChange(of: pkManager.assertionnResponse) {
-            
-          
-            
             Task {
                 if let assert = pkManager.assertion, assert.id != "" {
                     loadingStatus = "verify server challenge"
@@ -176,12 +177,106 @@ struct ProfileView: View {
                 }
                 
             }
+        }
+        .onChange(of: appKeyGoogleAuth.idToken) { _,token in
+            if token == "" {return}
+            
+            print("googleAuth User: \(appKeyGoogleAuth.givenName) \(appKeyGoogleAuth.familyName)")
+            print("googleAuth idToken: \(token)")
            
+            Task{
+                do {
+                    let verifyComplete = try await AppKeyAPI.verifySocialAccount(token, provider: "google")
+                    print("verifyComplete \(verifyComplete)")
+                    
+                    let _ = try await apiManager.deleteAccount()
+                    
+                    appState.loading = false
+                    
+                    apiManager.logout()
+                    appState.target = .loggedOut
+                }
+                catch let error as AppKeyError {
+                   
+                    appState.loading = false
+                    loadingStatus = error.message
+                    showingAlert.toggle()
+                    
+                }
+                catch {
+                    
+                    appState.loading = false
+                    loadingStatus = error.localizedDescription
+                    showingAlert.toggle()
+                    
+                }
+            }
             
         }
+        .onChange(of: appKeyGoogleAuth.errorMessage) { _, message in
+            if message == "" {return}
+            print("cosyncGoogleAuth message: \(message)")
+            loadingStatus = message
+            showingAlert.toggle()
+            
+        }
+        .onChange(of : pkManager.verifcationResponse) {
+            
+            Task {
+                if let appleIDCredential = pkManager.signInWithAppleCredential,  let identityToken = appleIDCredential.identityToken {
+                    let idToken = String(data: identityToken, encoding: .utf8)!
+                    print("apple login: \(String(describing: idToken))")
+                    do{
+                        
+                        let verifyComplete = try await AppKeyAPI.verifySocialAccount(idToken, provider: "apple")
+                        print("verifyComplete \(verifyComplete)")
+                        
+                        let _ = try await apiManager.deleteAccount()
+                        
+                        appState.loading = false
+                        
+                        apiManager.logout()
+                        appState.target = .loggedOut
+                       
+                        
+                    }
+                    catch let error as AppKeyError {
+                       
+                        appState.loading = false
+                        loadingStatus = error.message
+                        showingAlert.toggle()
+                        
+                    }
+                    catch {
+                        
+                        appState.loading = false
+                        loadingStatus = error.localizedDescription
+                        showingAlert.toggle()
+                        
+                    }
+                }
+                
+            }
+            
+           
+        }
+        
     }
     
-    
+    func verifyAccount()  {
+        
+        if apiManager.appUser!.loginProvider == "apple" {
+            pkManager.signInWithAppleButton(anchor: ASPresentationAnchor())
+        }
+        else  if apiManager.appUser!.loginProvider == "google" {
+            appKeyGoogleAuth.signIn()
+        }
+        else {
+            verify()
+        }
+    }
+     
+     
     
     func verify()  {
         Task{

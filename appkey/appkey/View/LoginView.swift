@@ -128,16 +128,15 @@ struct LoginView: View {
                         }
                         
                         if isAppleLogin == true {
-                            SignInWithAppleButton(.signIn,              //1 .signin, or .continue or .signUp for button label
-                                                  onRequest: { (request) in             //2
-                                //Set up request
+                            SignInWithAppleButton(.signIn,            //1 .signin, or .continue or .signUp for button label
+                                onRequest: { (request) in             //2 //Set up request
                                 request.requestedScopes = [.fullName, .email]
                             },
-                                                  onCompletion: { result in
+                            onCompletion: { result in
                                 switch result {
-                                case .success(let authResults):
-                                    handleAppleSignInButton(authorization:authResults)
-                                case .failure(let error):
+                                    case .success(let authResults):
+                                        handleAppleSignInButton(authorization:authResults)
+                                    case .failure(let error):
                                     print("Authorisation failed: \(error.localizedDescription)")
                                     self.showLoginError(message: error.localizedDescription)
                                 }
@@ -366,7 +365,7 @@ struct LoginView: View {
         self.email = appleIDCredential.email ?? ""
         self.provider = "apple"
   
-        // already login before
+      
         Task { @MainActor in
             do {
                 let user = try await apiManager.socialLogin(self.idToken, provider: provider)
@@ -383,9 +382,9 @@ struct LoginView: View {
                 
             } catch let error as AppKeyError {
                 self.appState.loading = false
-                
+                print("social login error: \(error.localizedDescription)")
                 if error == .accountDoesNotExist {
-                    
+                    print("social accountDoesNotExist fullName:")
                     print("\(String(describing: appleIDCredential.fullName))")
                     
                     if let name = appleIDCredential.fullName,
@@ -557,14 +556,14 @@ struct LoginView: View {
             } catch let error as AppKeyError {
                 self.appState.loading = false
                 let message = error.message
-                print("signupSocialAccount error \(message)")
+                print("signupSocialAccount AppKeyError  \(message)")
                 self.showLoginError(message: message)
                 
             } catch {
                 self.appState.loading = false
                 let message = error.localizedDescription as String
 
-                print("signupSocialAccount error \(message)")
+                print("signupSocialAccount error localizedDescription \(message)")
                 self.showLoginError(message: message)
            
             }
