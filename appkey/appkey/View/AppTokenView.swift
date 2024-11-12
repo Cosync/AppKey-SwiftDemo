@@ -115,33 +115,44 @@ struct AppTokenView: View {
             let tokenTrim = token.trimmingCharacters(in: CharacterSet.whitespaces)
             
             if !tokenTrim.isEmpty {
-                
                 AppKeyAPIManager.shared.configure(appToken: tokenTrim,
                                                   appKeyRestAddress: Constants.API_URL_ADDRESS)
+               
                 
                 do {
                     if let app = try await AppKeyAPI.getApp() {
                         
-                        let defaults = UserDefaults.standard
-                        defaults.set(tokenTrim, forKey: "appToken")
-                        
-                        print("setAppToken  app ", app)
-                        
-                        self.appState.application = app
-                        self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled
-                        
-                        loadingStatus = "Your application is \(app.name)"
-                        showingAlert.toggle()
+                        if let relyPartyId = app.relyPartyId {
+                            loadingStatus = "Your application has rely party id '\(relyPartyId)'. Please remove this id to test authentication of your app."
+                            showingAlert.toggle()
+                            
+                            AppKeyAPIManager.shared.configure(appToken: Constants.APP_TOKEN,
+                                                              appKeyRestAddress: Constants.API_URL_ADDRESS)
+                             
+                            
+                        }
+                        else{
+                            
+                            
+                            let defaults = UserDefaults.standard
+                            defaults.set(tokenTrim, forKey: "appToken")
+                            
+                            print("setAppToken  app ", app)
+                            
+                            self.appState.application = app
+                            self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled
+                            
+                            loadingStatus = "Your application is \(app.name)"
+                            showingAlert.toggle()
+                        }
                     }
                 }
                 catch {
                     loadingStatus = "Invalid App Token"
                     token = ""
+                   
                     
-                    let defaults = UserDefaults.standard
-                    let appToken = defaults.object(forKey: "appToken") as? String ?? Constants.APP_TOKEN
-                    
-                    AppKeyAPIManager.shared.configure(appToken: appToken,
+                    AppKeyAPIManager.shared.configure(appToken: Constants.APP_TOKEN,
                                                       appKeyRestAddress: Constants.API_URL_ADDRESS)
                     
                     let _ = try await AppKeyAPI.getApp()
