@@ -271,11 +271,25 @@ struct SignupView: View {
     func signup() {
         Task{
             
-            if handle.isEmpty || !handle.isValidEmail{
-                loadingStatus = "Please enter a valid email"
-                showingAlert.toggle()
-                return
+            if let handleType = apiManager.application?.handleType{
+                if handle.isEmpty {
+                    loadingStatus = "Please enter a valid handle"
+                    showingAlert.toggle()
+                    
+                }
+                else if handleType == "email" && !handle.isValidEmail {
+                    loadingStatus = "Please enter a valid email"
+                    showingAlert.toggle()
+                    return
+                }
+                else if handleType == "phone" && !handle.isValidPhone {
+                    loadingStatus = "Please enter a valid phone number"
+                    showingAlert.toggle()
+                    return
+                }
+                
             }
+           
             
             loadingStatus = "getting server challenge"
             appState.loading = true

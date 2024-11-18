@@ -8,8 +8,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:appkey.io</string>
-		<string>webcredentials:passclef.com</string>
+		<string>webcredentials:portal.apploqr.net</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

@@ -465,7 +465,7 @@ struct LoginView: View {
             catch let error as AppKeyError {
                 appState.loading = false
                 
-                if(error == .accountNoPasskey){
+                if(error == .passkeyNotExist){
                     appState.loading = false
                     loadingStatus = "Your account does not have passkey. Please signup again."
                     showingAlert.toggle()
