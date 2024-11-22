@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,12 @@
 		52DE244D2CD31B92003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE244C2CD31B92003E1708 /* AppKeySwift */; };
 		52DE24502CD39674003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE244F2CD39674003E1708 /* AppKeyGoogleAuth */; };
 		52DE24522CD39674003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24512CD39674003E1708 /* AppKeySwift */; };
+		CB2074182CF0BB6900535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074172CF0BB6900535843 /* AppKeyGoogleAuth */; };
+		CB20741A2CF0BB6900535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074192CF0BB6900535843 /* AppKeySwift */; };
+		CB20741D2CF0BC1100535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB20741C2CF0BC1100535843 /* AppKeyGoogleAuth */; };
+		CB20741F2CF0BC1100535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB20741E2CF0BC1100535843 /* AppKeySwift */; };
+		CB2074222CF0BCEF00535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074212CF0BCEF00535843 /* AppKeyGoogleAuth */; };
+		CB2074242CF0BCEF00535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074232CF0BCEF00535843 /* AppKeySwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,8 +77,10 @@
 			files = (
 				52DE24332CD0DAB6003E1708 /* GoogleSignInSwift in Frameworks */,
 				52DE244B2CD31B92003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				CB20741F2CF0BC1100535843 /* AppKeySwift in Frameworks */,
 				52DE24522CD39674003E1708 /* AppKeySwift in Frameworks */,
 				52DE243B2CD2192C003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				CB2074242CF0BCEF00535843 /* AppKeySwift in Frameworks */,
 				52DE242B2CD0CBC2003E1708 /* GoogleSignInSwift in Frameworks */,
 				52DE24482CD22907003E1708 /* AppKeySwift in Frameworks */,
 				52DE24412CD228CB003E1708 /* AppKeyGoogleAuth in Frameworks */,
@@ -82,8 +90,12 @@
 				52DE24502CD39674003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */,
 				52DE244D2CD31B92003E1708 /* AppKeySwift in Frameworks */,
+				CB2074182CF0BB6900535843 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24292CD0CBC2003E1708 /* GoogleSignIn in Frameworks */,
 				52DE243D2CD2192C003E1708 /* AppKeySwift in Frameworks */,
+				CB2074222CF0BCEF00535843 /* AppKeyGoogleAuth in Frameworks */,
+				CB20741A2CF0BB6900535843 /* AppKeySwift in Frameworks */,
+				CB20741D2CF0BC1100535843 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */,
 				52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				528551CD2CD9BADC003E5941 /* AppKeyGoogleAuth in Frameworks */,
@@ -195,7 +207,7 @@
 			);
 			mainGroup = 52CAA8932CB5078C00B647E9;
 			packageReferences = (
-				528551CB2CD9BADC003E5941 /* XCLocalSwiftPackageReference "../../AppKeySwift" */,
+				CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
 			);
 			productRefGroup = 52CAA89D2CB5078C00B647E9 /* Products */;
 			projectDirPath = "";
@@ -385,7 +397,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.cosync.cosync;
+				PRODUCT_BUNDLE_IDENTIFIER = io.appkey.appdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -424,7 +436,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.cosync.cosync;
+				PRODUCT_BUNDLE_IDENTIFIER = io.appkey.appdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -457,13 +469,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		528551CB2CD9BADC003E5941 /* XCLocalSwiftPackageReference "../../AppKeySwift" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../AppKeySwift;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -495,6 +500,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.16;
+			};
+		};
+		CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.18;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -582,6 +595,32 @@
 		52DE24512CD39674003E1708 /* AppKeySwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 52DE244E2CD39674003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeySwift;
+		};
+		CB2074172CF0BB6900535843 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		CB2074192CF0BB6900535843 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		CB20741C2CF0BC1100535843 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		CB20741E2CF0BC1100535843 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		CB2074212CF0BCEF00535843 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		CB2074232CF0BCEF00535843 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeySwift;
 		};
 /* End XCSwiftPackageProductDependency section */
