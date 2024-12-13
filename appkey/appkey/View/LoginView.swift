@@ -540,16 +540,9 @@ struct LoginView: View {
                 
                 self.appState.loading = true
                 
-                let user = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName)
+                let user = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName) 
                     
-                    
-                if let application = apiManager.application , application.userNamesEnabled {
-                    self.appState.target = .loginUserName
-                }
-                else {
-                    self.appState.target = .loggedIn
-                }
-                 
+                self.appState.target = .loggedIn
                 
                 self.appState.loading = false
                 
