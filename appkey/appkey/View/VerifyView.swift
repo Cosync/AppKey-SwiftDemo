@@ -197,8 +197,8 @@ struct VerifyView: View {
                     
                     if let challengeData = response.challenge.decodeBase64Url {
                         
-                        let allowedCredentials = response.allowCredentials.map{$0.id}
-                        pkManager.signInWith(anchor: ASPresentationAnchor(), challenge: challengeData, allowedCredentials: allowedCredentials, relyingParty: Constants.RELYING_PARTY_ID, preferImmediatelyAvailableCredentials: false)
+                        
+                        pkManager.signInWith(anchor: ASPresentationAnchor(), challenge: challengeData, allowedCredentials: [], relyingParty: Constants.RELYING_PARTY_ID, preferImmediatelyAvailableCredentials: false)
                     }
                     else {
                         appState.loading = false

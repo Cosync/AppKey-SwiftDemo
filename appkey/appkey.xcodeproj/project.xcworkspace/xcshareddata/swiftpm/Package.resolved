@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Cosync/AppKeySwift.git",
       "state" : {
-        "revision" : "bcf5fcedb56453a9ecd52ec21dc4cca678293c23",
-        "version" : "1.0.18"
+        "revision" : "5466a6a4bfdf3cd281aa3e2d4406ac4feff9bc10",
+        "version" : "1.0.19"
       }
     },
     {
