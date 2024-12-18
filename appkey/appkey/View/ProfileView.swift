@@ -26,9 +26,28 @@ struct ProfileView: View {
     
     var body: some View {
         VStack{
+            HStack(spacing: 20) {
+                
+                Link(destination: URL(string: "https://cosync.io")!) {
+                    Image("Cosync").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                Spacer()
+                
+                Link(destination: URL(string: "https://appkey.info")!) {
+                    Image("AppKey").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                 
+            }
+            .padding()
+            
             if let appUser = apiManager.appUser {
                 
-                Text("Welcome: \(appUser.displayName)") .font(.largeTitle)
+                Text("Welcome to the AppKey demo! Sign up with your email to create your passkey and log in effortlessly. Discover how simple and secure passwordless login can be—no passwords, just your passkey.").padding(.horizontal)
+                
+                
+                Text("Welcome: \(appUser.displayName)") .font(.headline)
                 
                 Text("Handle: \(appUser.handle)") .font(.headline)
                

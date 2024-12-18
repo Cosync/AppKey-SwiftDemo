@@ -45,10 +45,25 @@ struct LoginView: View {
     var body: some View {
         
         VStack(spacing: 20) {
+            HStack(spacing: 20) {
+                
+                Link(destination: URL(string: "https://cosync.io")!) {
+                    Image("Cosync").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                Spacer()
+                
+                Link(destination: URL(string: "https://appkey.info")!) {
+                    Image("AppKey").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                 
+            }
+            .padding()
             
-            Image("AppKey").frame(width: 300).padding()
+            Text("Welcome to the AppKey demo! Log in securely using your passkey or sign up with your email to create one in seconds. See for yourself how fast and seamless passkey creation can be with AppKey—no passwords, no hassle, just security made simple.").padding(.horizontal)
             
-            Spacer().frame(height: 150)
+            
             
             Group {
                 TextField("Email", text: $email)
@@ -540,7 +555,7 @@ struct LoginView: View {
                 
                 self.appState.loading = true
                 
-                let user = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName) 
+                let _ = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName)
                     
                 self.appState.target = .loggedIn
                 
