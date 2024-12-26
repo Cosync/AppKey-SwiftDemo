@@ -334,12 +334,9 @@ struct LoginView: View {
                self.provider = "google"
                let user = try await apiManager.socialLogin(token, provider: provider)
                
-               if apiManager.application!.userNamesEnabled == true && (user.userName == "" || user.userName == nil) {
-                   self.appState.target = .loginUserName
-               }
-               else {
-                   self.appState.target = .loggedIn
-               }
+               print(" google social log user \(user)")
+               
+               self.appState.target = .loggedIn
                
                self.appState.loading = false
                
@@ -352,8 +349,6 @@ struct LoginView: View {
                else {
                    
                    self.showLoginError(message: error.message)
-                   
-                    
                }
            }
            
@@ -384,14 +379,9 @@ struct LoginView: View {
         Task { @MainActor in
             do {
                 let user = try await apiManager.socialLogin(self.idToken, provider: provider)
-                print("social log user \(user)")
+                print(" apple social log user \(user)")
                 
-                if apiManager.application!.userNamesEnabled == true && (user.userName == "" || user.userName == nil) {
-                    self.appState.target = .loginUserName
-                }
-                else {
-                    self.appState.target = .loggedIn
-                }
+                self.appState.target = .loggedIn
                 
                 self.appState.loading = false
                 

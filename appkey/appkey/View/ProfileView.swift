@@ -20,7 +20,7 @@ struct ProfileView: View {
     @State private var locale:String = "EN"
     @State private var isDeleteUser:Bool = false
     @StateObject private var pkManager = AKPasskeysManager.shared
-    @State var loadingStatus = ""
+    @State var errorMessage = ""
     @State var showingAlert = false
   
     
@@ -122,7 +122,7 @@ struct ProfileView: View {
         .alert(isPresented: $showingAlert) {
             
             Alert(title: Text("AppKey"),
-                  message: Text("\(loadingStatus)"),
+                  message: Text("\(errorMessage)"),
                   dismissButton: .default(Text("Got it!"))
             )
         }
@@ -146,11 +146,10 @@ struct ProfileView: View {
         .onChange(of: pkManager.assertionnResponse) {
             Task {
                 if let assert = pkManager.assertion, assert.id != "" {
-                    loadingStatus = "verify server challenge"
-                    
+                     
                     do{
                         
-                        let verifyComplete = try await AppKeyAPI.verifyComplete(handle: apiManager.appUser!.handle, assertion: assert)
+                        let verifyComplete = try await apiManager.verifyComplete(handle: apiManager.appUser!.handle, assertion: assert)
                         print("verifyComplete \(verifyComplete)")
                         
                         let _ = try await apiManager.deleteAccount()
@@ -165,14 +164,14 @@ struct ProfileView: View {
                     catch let error as AppKeyError {
                        
                         appState.loading = false
-                        loadingStatus = error.message
+                        errorMessage = error.message
                         showingAlert.toggle()
                         
                     }
                     catch {
                         
                         appState.loading = false
-                        loadingStatus = error.localizedDescription
+                        errorMessage = error.localizedDescription
                         showingAlert.toggle()
                         
                     }
@@ -183,7 +182,7 @@ struct ProfileView: View {
         .onChange(of: pkManager.errorResponse) {
             
             appState.loading = false
-            loadingStatus = pkManager.errorResponse ?? "Error Key"
+            errorMessage = pkManager.errorResponse ?? "Error Key"
             showingAlert.toggle()
         }
         .onChange(of: pkManager.status) {
@@ -191,7 +190,7 @@ struct ProfileView: View {
                 appState.loading = false
                 
                 if pkManager.status == "error" {
-                    loadingStatus = "Invalid Authorization"
+                    errorMessage = "Invalid Authorization"
                     showingAlert.toggle()
                 }
                 
@@ -218,14 +217,14 @@ struct ProfileView: View {
                 catch let error as AppKeyError {
                    
                     appState.loading = false
-                    loadingStatus = error.message
+                    errorMessage = error.message
                     showingAlert.toggle()
                     
                 }
                 catch {
                     
                     appState.loading = false
-                    loadingStatus = error.localizedDescription
+                    errorMessage = error.localizedDescription
                     showingAlert.toggle()
                     
                 }
@@ -235,7 +234,7 @@ struct ProfileView: View {
         .onChange(of: appKeyGoogleAuth.errorMessage) { _, message in
             if message == "" {return}
             print("cosyncGoogleAuth message: \(message)")
-            loadingStatus = message
+            errorMessage = message
             showingAlert.toggle()
             
         }
@@ -262,14 +261,14 @@ struct ProfileView: View {
                     catch let error as AppKeyError {
                        
                         appState.loading = false
-                        loadingStatus = error.message
+                        errorMessage = error.message
                         showingAlert.toggle()
                         
                     }
                     catch {
                         
                         appState.loading = false
-                        loadingStatus = error.localizedDescription
+                        errorMessage = error.localizedDescription
                         showingAlert.toggle()
                         
                     }
@@ -313,7 +312,7 @@ struct ProfileView: View {
                     }
                     else {
                         appState.loading = false
-                        loadingStatus = "Invalid Challenge Data"
+                        errorMessage = "Invalid Challenge Data"
                         showingAlert.toggle()
                     }
                     
@@ -325,13 +324,13 @@ struct ProfileView: View {
             }
             catch let error as AppKeyError {
                 appState.loading = false
-                loadingStatus = error.message
+                errorMessage = error.message
                 showingAlert.toggle()
                 
             }
             catch  {
                 appState.loading = false
-                loadingStatus = error.localizedDescription
+                errorMessage = error.localizedDescription
                 showingAlert.toggle()
                 
             }
