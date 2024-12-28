@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		528551CD2CD9BADC003E5941 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 528551CC2CD9BADC003E5941 /* AppKeyGoogleAuth */; };
 		528551CF2CD9BADC003E5941 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 528551CE2CD9BADC003E5941 /* AppKeySwift */; };
-		52868D802CC2319F007AFD85 /* AppTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52868D7F2CC2319E007AFD85 /* AppTokenView.swift */; };
 		52CAA8A02CB5078C00B647E9 /* appkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */; };
 		52CAA8A22CB5078C00B647E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8A12CB5078C00B647E9 /* ContentView.swift */; };
 		52CAA8A42CB5078E00B647E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52CAA8A32CB5078E00B647E9 /* Assets.xcassets */; };
@@ -50,7 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		52868D7F2CC2319E007AFD85 /* AppTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTokenView.swift; sourceTree = "<group>"; };
 		52CAA89C2CB5078C00B647E9 /* appkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appkeyApp.swift; sourceTree = "<group>"; };
 		52CAA8A12CB5078C00B647E9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				52CAA8B72CB5082F00B647E9 /* SetUsernameView.swift */,
 				52CAA8B92CB5083A00B647E9 /* ProfileView.swift */,
 				52CAA8BB2CB5084500B647E9 /* VerifyView.swift */,
-				52868D7F2CC2319E007AFD85 /* AppTokenView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -235,7 +232,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52868D802CC2319F007AFD85 /* AppTokenView.swift in Sources */,
 				52CAA8BA2CB5083A00B647E9 /* ProfileView.swift in Sources */,
 				52CAA8C72CB5088D00B647E9 /* ExtensionManager.swift in Sources */,
 				52CAA8B62CB5081E00B647E9 /* LoginView.swift in Sources */,

@@ -33,14 +33,7 @@ struct LoggedOutView: View {
                SignupView().tabItem {
                    Image(systemName: "person.badge.plus")
                    Text("Signup")
-               }.tag("Signup")
-               
-               if Constants.RELYING_PARTY_ID.contains("appkey.io") || Constants.RELYING_PARTY_ID.contains("passclef.com") {
-                   AppTokenView().tabItem {
-                       Image(systemName: "t.circle.fill")
-                       Text("App Token")
-                   }.tag("AppToken")
-               }
+               }.tag("Signup") 
            }
            
            
