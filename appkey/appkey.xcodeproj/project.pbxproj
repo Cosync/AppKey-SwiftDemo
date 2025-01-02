@@ -49,7 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		52CAA89C2CB5078C00B647E9 /* appkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CAA89C2CB5078C00B647E9 /* Cosync AppKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cosync AppKey.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appkeyApp.swift; sourceTree = "<group>"; };
 		52CAA8A12CB5078C00B647E9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		52CAA8A32CB5078E00B647E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		52CAA89D2CB5078C00B647E9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				52CAA89C2CB5078C00B647E9 /* appkey.app */,
+				52CAA89C2CB5078C00B647E9 /* Cosync AppKey.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,7 +176,7 @@
 			);
 			name = appkey;
 			productName = appkey;
-			productReference = 52CAA89C2CB5078C00B647E9 /* appkey.app */;
+			productReference = 52CAA89C2CB5078C00B647E9 /* Cosync AppKey.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -397,7 +397,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.appkey.appdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cosync AppKey";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -437,7 +437,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.appkey.appdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cosync AppKey";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
