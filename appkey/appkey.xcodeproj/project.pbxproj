@@ -23,11 +23,7 @@
 		52CAA8C72CB5088D00B647E9 /* ExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8C62CB5088D00B647E9 /* ExtensionManager.swift */; };
 		52CAA8C92CB508B100B647E9 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8C82CB508B100B647E9 /* AppState.swift */; };
 		52CAA8CB2CB508CA00B647E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8CA2CB508CA00B647E9 /* Constants.swift */; };
-		52DE24292CD0CBC2003E1708 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24282CD0CBC2003E1708 /* GoogleSignIn */; };
-		52DE242B2CD0CBC2003E1708 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE242A2CD0CBC2003E1708 /* GoogleSignInSwift */; };
 		52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE242D2CD0D0FA003E1708 /* AppKeySwift */; };
-		52DE24312CD0DAB6003E1708 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24302CD0DAB6003E1708 /* GoogleSignIn */; };
-		52DE24332CD0DAB6003E1708 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24322CD0DAB6003E1708 /* GoogleSignInSwift */; };
 		52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24352CD218E4003E1708 /* AppKeyGoogleAuth */; };
 		52DE24382CD218E4003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24372CD218E4003E1708 /* AppKeySwift */; };
 		52DE243B2CD2192C003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE243A2CD2192C003E1708 /* AppKeyGoogleAuth */; };
@@ -36,14 +32,40 @@
 		52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24422CD228CB003E1708 /* AppKeySwift */; };
 		52DE24462CD22907003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24452CD22907003E1708 /* AppKeyGoogleAuth */; };
 		52DE24482CD22907003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24472CD22907003E1708 /* AppKeySwift */; };
-		52DE244B2CD31B92003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE244A2CD31B92003E1708 /* AppKeyGoogleAuth */; };
 		52DE244D2CD31B92003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE244C2CD31B92003E1708 /* AppKeySwift */; };
 		52DE24502CD39674003E1708 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE244F2CD39674003E1708 /* AppKeyGoogleAuth */; };
-		52DE24522CD39674003E1708 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52DE24512CD39674003E1708 /* AppKeySwift */; };
+		52F6E2832D27C9CF000F1661 /* PasskeyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F6E2822D27C9C7000F1661 /* PasskeyRow.swift */; };
+		52F6E2862D27CD0E000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2852D27CD0E000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2882D27CD0E000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2872D27CD0E000F1661 /* AppKeySwift */; };
+		52F6E28D2D27CDE0000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E28C2D27CDE0000F1661 /* AppKeySwift */; };
+		52F6E2902D27D3A5000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E28F2D27D3A5000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2922D27D3A5000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2912D27D3A5000F1661 /* AppKeySwift */; };
+		52F6E2952D27D3EC000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2942D27D3EC000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2972D27D3EC000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2962D27D3EC000F1661 /* AppKeySwift */; };
+		52F6E29A2D27D44E000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2992D27D44E000F1661 /* AppKeyGoogleAuth */; };
+		52F6E29C2D27D44E000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E29B2D27D44E000F1661 /* AppKeySwift */; };
+		52F6E29F2D27D4EB000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E29E2D27D4EB000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2A12D27D4EB000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2A02D27D4EB000F1661 /* AppKeySwift */; };
+		52F6E2A42D27D50B000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2A32D27D50B000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2A62D27D50B000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2A52D27D50B000F1661 /* AppKeySwift */; };
+		52F6E2AA2D27DDE5000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2A92D27DDE5000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2AC2D27DDE5000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2AB2D27DDE5000F1661 /* AppKeySwift */; };
+		52F6E2AF2D27DE46000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2AE2D27DE46000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2B12D27DE46000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2B02D27DE46000F1661 /* AppKeySwift */; };
+		52F6E2B42D27DE97000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2B32D27DE97000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2B62D27DE97000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2B52D27DE97000F1661 /* AppKeySwift */; };
+		52F6E2B92D27E084000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2B82D27E084000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2BB2D27E084000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2BA2D27E084000F1661 /* AppKeySwift */; };
+		52F6E2BD2D27E12F000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2BC2D27E12F000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2BF2D27E12F000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2BE2D27E12F000F1661 /* AppKeySwift */; };
+		52F6E2C22D27E179000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2C12D27E179000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2C42D27E179000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2C32D27E179000F1661 /* AppKeySwift */; };
+		52F6E2C62D2CDC71000F1661 /* PasskeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F6E2C52D2CDC71000F1661 /* PasskeyView.swift */; };
+		52F6E2D02D2E692F000F1661 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2CF2D2E692F000F1661 /* AppKeyGoogleAuth */; };
+		52F6E2D22D2E692F000F1661 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52F6E2D12D2E692F000F1661 /* AppKeySwift */; };
 		CB2074182CF0BB6900535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074172CF0BB6900535843 /* AppKeyGoogleAuth */; };
 		CB20741A2CF0BB6900535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074192CF0BB6900535843 /* AppKeySwift */; };
 		CB20741D2CF0BC1100535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB20741C2CF0BC1100535843 /* AppKeyGoogleAuth */; };
-		CB20741F2CF0BC1100535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB20741E2CF0BC1100535843 /* AppKeySwift */; };
 		CB2074222CF0BCEF00535843 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074212CF0BCEF00535843 /* AppKeyGoogleAuth */; };
 		CB2074242CF0BCEF00535843 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB2074232CF0BCEF00535843 /* AppKeySwift */; };
 /* End PBXBuildFile section */
@@ -66,6 +88,8 @@
 		52CAA8C82CB508B100B647E9 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		52CAA8CA2CB508CA00B647E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		52DE243E2CD22047003E1708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		52F6E2822D27C9C7000F1661 /* PasskeyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyRow.swift; sourceTree = "<group>"; };
+		52F6E2C52D2CDC71000F1661 /* PasskeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,30 +97,50 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52DE24332CD0DAB6003E1708 /* GoogleSignInSwift in Frameworks */,
-				52DE244B2CD31B92003E1708 /* AppKeyGoogleAuth in Frameworks */,
-				CB20741F2CF0BC1100535843 /* AppKeySwift in Frameworks */,
-				52DE24522CD39674003E1708 /* AppKeySwift in Frameworks */,
 				52DE243B2CD2192C003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E29F2D27D4EB000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				CB2074242CF0BCEF00535843 /* AppKeySwift in Frameworks */,
-				52DE242B2CD0CBC2003E1708 /* GoogleSignInSwift in Frameworks */,
 				52DE24482CD22907003E1708 /* AppKeySwift in Frameworks */,
+				52F6E2952D27D3EC000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2B92D27E084000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24412CD228CB003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24382CD218E4003E1708 /* AppKeySwift in Frameworks */,
 				52DE24462CD22907003E1708 /* AppKeyGoogleAuth in Frameworks */,
-				52DE24312CD0DAB6003E1708 /* GoogleSignIn in Frameworks */,
 				52DE24502CD39674003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2AA2D27DDE5000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */,
 				52DE244D2CD31B92003E1708 /* AppKeySwift in Frameworks */,
 				CB2074182CF0BB6900535843 /* AppKeyGoogleAuth in Frameworks */,
-				52DE24292CD0CBC2003E1708 /* GoogleSignIn in Frameworks */,
+				52F6E2882D27CD0E000F1661 /* AppKeySwift in Frameworks */,
 				52DE243D2CD2192C003E1708 /* AppKeySwift in Frameworks */,
+				52F6E2BB2D27E084000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2D02D2E692F000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				CB2074222CF0BCEF00535843 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E28D2D27CDE0000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2B42D27DE97000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2BF2D27E12F000F1661 /* AppKeySwift in Frameworks */,
 				CB20741A2CF0BB6900535843 /* AppKeySwift in Frameworks */,
+				52F6E29C2D27D44E000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2902D27D3A5000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2D22D2E692F000F1661 /* AppKeySwift in Frameworks */,
 				CB20741D2CF0BC1100535843 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2862D27CD0E000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2C42D27E179000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2A12D27D4EB000F1661 /* AppKeySwift in Frameworks */,
 				52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */,
+				52F6E2A42D27D50B000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2C22D27E179000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E29A2D27D44E000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2922D27D3A5000F1661 /* AppKeySwift in Frameworks */,
 				528551CD2CD9BADC003E5941 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2AF2D27DE46000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2BD2D27E12F000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52F6E2B12D27DE46000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2A62D27D50B000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2972D27D3EC000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2B62D27DE97000F1661 /* AppKeySwift in Frameworks */,
+				52F6E2AC2D27DDE5000F1661 /* AppKeySwift in Frameworks */,
 				528551CF2CD9BADC003E5941 /* AppKeySwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +191,7 @@
 		52CAA8AE2CB507DB00B647E9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				52F6E2822D27C9C7000F1661 /* PasskeyRow.swift */,
 				52CAA8C62CB5088D00B647E9 /* ExtensionManager.swift */,
 				52CAA8AF2CB507FB00B647E9 /* LoggedInView.swift */,
 				52CAA8B12CB5080700B647E9 /* LoggedOutView.swift */,
@@ -155,6 +200,7 @@
 				52CAA8B72CB5082F00B647E9 /* SetUsernameView.swift */,
 				52CAA8B92CB5083A00B647E9 /* ProfileView.swift */,
 				52CAA8BB2CB5084500B647E9 /* VerifyView.swift */,
+				52F6E2C52D2CDC71000F1661 /* PasskeyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,7 +250,7 @@
 			);
 			mainGroup = 52CAA8932CB5078C00B647E9;
 			packageReferences = (
-				CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
+				52F6E2CE2D2E692F000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
 			);
 			productRefGroup = 52CAA89D2CB5078C00B647E9 /* Products */;
 			projectDirPath = "";
@@ -233,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52CAA8BA2CB5083A00B647E9 /* ProfileView.swift in Sources */,
+				52F6E2832D27C9CF000F1661 /* PasskeyRow.swift in Sources */,
 				52CAA8C72CB5088D00B647E9 /* ExtensionManager.swift in Sources */,
 				52CAA8B62CB5081E00B647E9 /* LoginView.swift in Sources */,
 				52CAA8C92CB508B100B647E9 /* AppState.swift in Sources */,
@@ -240,6 +287,7 @@
 				52CAA8A22CB5078C00B647E9 /* ContentView.swift in Sources */,
 				52CAA8BC2CB5084500B647E9 /* VerifyView.swift in Sources */,
 				52CAA8B02CB507FB00B647E9 /* LoggedInView.swift in Sources */,
+				52F6E2C62D2CDC71000F1661 /* PasskeyView.swift in Sources */,
 				52CAA8A02CB5078C00B647E9 /* appkeyApp.swift in Sources */,
 				52CAA8B82CB5082F00B647E9 /* SetUsernameView.swift in Sources */,
 				52CAA8B22CB5080700B647E9 /* LoggedOutView.swift in Sources */,
@@ -470,22 +518,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.0.0;
-			};
-		};
-		52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.0.0;
-			};
-		};
 		52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
@@ -500,6 +532,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.16;
+			};
+		};
+		52F6E2A22D27D50B000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.22;
+			};
+		};
+		52F6E2B22D27DE97000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.24;
+			};
+		};
+		52F6E2CE2D2E692F000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.25;
 			};
 		};
 		CB2074202CF0BCEF00535843 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
@@ -521,29 +577,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AppKeySwift;
 		};
-		52DE24282CD0CBC2003E1708 /* GoogleSignIn */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-		52DE242A2CD0CBC2003E1708 /* GoogleSignInSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 52DE24272CD0CBC2003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignInSwift;
-		};
 		52DE242D2CD0D0FA003E1708 /* AppKeySwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppKeySwift;
-		};
-		52DE24302CD0DAB6003E1708 /* GoogleSignIn */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-		52DE24322CD0DAB6003E1708 /* GoogleSignInSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 52DE242F2CD0DAB6003E1708 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignInSwift;
 		};
 		52DE24352CD218E4003E1708 /* AppKeyGoogleAuth */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -579,10 +615,6 @@
 			package = 52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeySwift;
 		};
-		52DE244A2CD31B92003E1708 /* AppKeyGoogleAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppKeyGoogleAuth;
-		};
 		52DE244C2CD31B92003E1708 /* AppKeySwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppKeySwift;
@@ -592,9 +624,118 @@
 			package = 52DE244E2CD39674003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeyGoogleAuth;
 		};
-		52DE24512CD39674003E1708 /* AppKeySwift */ = {
+		52F6E2852D27CD0E000F1661 /* AppKeyGoogleAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 52DE244E2CD39674003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2872D27CD0E000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E28C2D27CDE0000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E28F2D27D3A5000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2912D27D3A5000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2942D27D3EC000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2962D27D3EC000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2992D27D44E000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E29B2D27D44E000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E29E2D27D4EB000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2A02D27D4EB000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2A32D27D50B000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2A22D27D50B000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2A52D27D50B000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2A22D27D50B000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeySwift;
+		};
+		52F6E2A92D27DDE5000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2AB2D27DDE5000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2AE2D27DE46000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2B02D27DE46000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2B32D27DE97000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2B22D27DE97000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2B52D27DE97000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2B22D27DE97000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeySwift;
+		};
+		52F6E2B82D27E084000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2BA2D27E084000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2BC2D27E12F000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2BE2D27E12F000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2C12D27E179000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2C32D27E179000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52F6E2CF2D2E692F000F1661 /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2CE2D2E692F000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52F6E2D12D2E692F000F1661 /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F6E2CE2D2E692F000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeySwift;
 		};
 		CB2074172CF0BB6900535843 /* AppKeyGoogleAuth */ = {
@@ -608,10 +749,6 @@
 		CB20741C2CF0BC1100535843 /* AppKeyGoogleAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppKeyGoogleAuth;
-		};
-		CB20741E2CF0BC1100535843 /* AppKeySwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppKeySwift;
 		};
 		CB2074212CF0BCEF00535843 /* AppKeyGoogleAuth */ = {
 			isa = XCSwiftPackageProductDependency;

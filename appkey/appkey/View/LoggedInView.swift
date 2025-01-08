@@ -13,25 +13,29 @@ struct LoggedInView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var apiManager = AppKeyAPIManager.shared
     
+    @State var selection: String = "Profile"
+    
     var body: some View {
-        VStack{
-            if let appUser = apiManager.appUser {
-                Text("Welcome: \(appUser.displayName)")
-                    .font(.largeTitle)
+        ZStack{
+            TabView (selection: $selection){
                 
+                ProfileView().tabItem {
+                    Image(systemName: "person.circle")
+                    Text("Profile")
+                }.tag("Profile")
+                
+                PasskeyView().tabItem {
+                    Image(systemName: "key.icloud")
+                    Text("Passkeys")
+                }.tag("Passkeys") 
             }
-            
-            Button(action: {
-                appState.target = .loggedOut
-            }) {
-                Text("Logout")
-                    .padding(.horizontal)
-                Image(systemName: "arrow.right.square")
-            }
-            .padding()
-            .foregroundColor(Color.white)
-            .background(Color.green)
-            .cornerRadius(8)
+        }
+        .onAppear(){
+            self.appState.tabSelection = selection
+        }
+        .onChange(of: selection){
+            print("tab selection ", selection)
+            appState.tabSelection = selection
         }
     }
 }

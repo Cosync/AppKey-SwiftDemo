@@ -11,7 +11,7 @@
 			<string>AppKeyGoogleLogin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.990108157672-nff1aak1hu83dj5brm5pm6r7knv4ic8m</string>
+				<string>Your_Google_URL_Scheme</string>
 			</array>
 		</dict>
 	</array>

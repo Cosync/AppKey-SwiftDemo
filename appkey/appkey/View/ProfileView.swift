@@ -19,6 +19,10 @@ struct ProfileView: View {
     @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
     @State private var locale:String = "EN"
     @State private var isDeleteUser:Bool = false
+   
+    
+    @State private var showVerifyAccount:Bool = false
+   
     @StateObject private var pkManager = AKPasskeysManager.shared
     @State var errorMessage = ""
     @State var showingAlert = false
@@ -38,7 +42,7 @@ struct ProfileView: View {
                     Image("AppKey").resizable().frame(width: 80.0, height: 80.0).padding()
                 }
                 
-                 
+                
             }
             .padding()
             
@@ -50,7 +54,7 @@ struct ProfileView: View {
                 Text("Welcome: \(appUser.displayName)") .font(.headline)
                 
                 Text("Handle: \(appUser.handle)") .font(.headline)
-               
+                
                 
                 if let userName = appUser.userName {
                     Text("User Name: \(userName)") .font(.body)
@@ -69,15 +73,16 @@ struct ProfileView: View {
                         }
                     }), content: {
                         ForEach(app.locales, id: \.self) { locale in
-                       
+                            
                             Text("\(locale)").font(.caption).tag("\(locale)")
                         }
                         
                     }).pickerStyle(.menu)
                     
-                   
+                    
                 }
             }
+            
             
             Spacer().frame(height: 50)
             
@@ -117,6 +122,8 @@ struct ProfileView: View {
             else {
                 self.locale = "EN"
             }
+            
+           
              
         }
         .alert(isPresented: $showingAlert) {
@@ -143,22 +150,42 @@ struct ProfileView: View {
             )
            
         }
+        .alert(isPresented: $showVerifyAccount) {
+            Alert(
+                title: Text("Verify AppKey Account"),
+                message: Text("Please verify your account to manage passkey"),
+                primaryButton: .default(
+                    Text("Cancel")
+                ),
+                secondaryButton: .destructive(
+                    Text("Verify"),
+                    action: {
+                        verifyAccount()
+                    }
+                )
+            )
+           
+        }
         .onChange(of: pkManager.assertionnResponse) {
+            
+            if appState.tabSelection != "Profile" { return }
+                
             Task {
                 if let assert = pkManager.assertion, assert.id != "" {
                      
                     do{
                         
-                        let verifyComplete = try await apiManager.verifyComplete(handle: apiManager.appUser!.handle, assertion: assert)
-                        print("verifyComplete \(verifyComplete)")
-                        
-                        let _ = try await apiManager.deleteAccount()
-                        
-                        appState.loading = false
-                        
-                        apiManager.logout()
-                        appState.target = .loggedOut
+                        _ = try await apiManager.verifyComplete(handle: apiManager.appUser!.handle, assertion: assert)
                        
+                        
+                        if isDeleteUser {
+                            let _ = try await apiManager.deleteAccount()
+                            
+                            apiManager.logout()
+                            appState.target = .loggedOut
+                        }
+                       
+                        appState.loading = false
                         
                     }
                     catch let error as AppKeyError {
@@ -179,13 +206,16 @@ struct ProfileView: View {
                 
             }
         }
+        
         .onChange(of: pkManager.errorResponse) {
-            
+            if appState.tabSelection != "Profile" { return }
             appState.loading = false
             errorMessage = pkManager.errorResponse ?? "Error Key"
             showingAlert.toggle()
         }
         .onChange(of: pkManager.status) {
+            if appState.tabSelection != "Profile" { return }
+            
             if pkManager.status != "success" {
                 appState.loading = false
                 
@@ -239,7 +269,7 @@ struct ProfileView: View {
             
         }
         .onChange(of : pkManager.verifcationResponse) {
-            
+            if appState.tabSelection != "Profile" { return }
             Task {
                 if let appleIDCredential = pkManager.signInWithAppleCredential,  let identityToken = appleIDCredential.identityToken {
                     let idToken = String(data: identityToken, encoding: .utf8)!
@@ -247,7 +277,7 @@ struct ProfileView: View {
                     do{
                         
                         let verifyComplete = try await AppKeyAPI.verifySocialAccount(idToken, provider: "apple")
-                        print("verifyComplete \(verifyComplete)")
+                       
                         
                         let _ = try await apiManager.deleteAccount()
                         
@@ -280,6 +310,8 @@ struct ProfileView: View {
         }
         
     }
+     
+  
     
     func verifyAccount()  {
         
@@ -336,6 +368,8 @@ struct ProfileView: View {
             }
         }
     }
+    
+     
     
      
 }
