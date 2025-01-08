@@ -96,7 +96,9 @@ struct PasskeyView: View {
                                 TextField("Enter Key Name", text: $keyName).textInputAutocapitalization(.words)
                                 Button("Update", action: {
                                     self.isEditingKey = true
-                                    self.showVerifyAccount.toggle()
+                                    
+                                    self.alertType = .verify
+                                    self.showAlert.toggle()
                                 })
                                 
                                 Button("Cancel", role: .cancel) { showEditingPasskey = false }
@@ -108,7 +110,9 @@ struct PasskeyView: View {
                                 Button(action: {
                                     self.selectedKey = key
                                     self.showDeletingPasskey.toggle()
-                                    showVerifyAccount = true
+                                    
+                                    self.alertType = .verify
+                                    self.showAlert = true
                                 }) {
                                     Image(systemName: "trash")
                                         .aspectRatio(contentMode: .fit)
@@ -125,7 +129,7 @@ struct PasskeyView: View {
                 Text("Your account does not have Passkey Authenticator.").font(.title)
             }
         }
-        .onAppear{ 
+        .onAppear{
             if let keys = apiManager.appUser?.authenticators {
                 authenticators = keys
             }
