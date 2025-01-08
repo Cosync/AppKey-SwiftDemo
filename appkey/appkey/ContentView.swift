@@ -30,7 +30,7 @@ struct ContentView: View {
            if self.appState.target == .loggedOut {
                LoggedOutView()
            } else if self.appState.target == .loggedIn {
-               ProfileView()
+               LoggedInView()
             
            } else if self.appState.target == .loginUserName {
                SetUsernameView()

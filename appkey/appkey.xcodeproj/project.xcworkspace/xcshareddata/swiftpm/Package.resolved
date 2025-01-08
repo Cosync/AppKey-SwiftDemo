@@ -1,5 +1,5 @@
 {
-  "originHash" : "60cbae670b818a65b1dda7ddd30e3315c669855070989025cedbccc3264d50de",
+  "originHash" : "6baf7050a2e5ce951f63423cdb0196f1ea924e838fd1aa8308488002403d906e",
   "pins" : [
     {
       "identity" : "appauth-ios",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "2781038865a80e2c425a1da12cc1327bcd56501f",
         "version" : "1.7.6"
-      }
-    },
-    {
-      "identity" : "appkeyswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Cosync/AppKeySwift.git",
-      "state" : {
-        "revision" : "5466a6a4bfdf3cd281aa3e2d4406ac4feff9bc10",
-        "version" : "1.0.20"
       }
     },
     {
