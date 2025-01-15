@@ -26,7 +26,14 @@ struct ProfileView: View {
     @StateObject private var pkManager = AKPasskeysManager.shared
     @State var errorMessage = ""
     @State var showingAlert = false
-  
+    
+    enum AlertType {
+        case verify
+        case deleteAccount
+        case error
+        case none
+    }
+    @State var alertType: AlertType = .none
     
     var body: some View {
         VStack{
@@ -87,7 +94,9 @@ struct ProfileView: View {
             Spacer().frame(height: 50)
             
             Button(action: {
-                isDeleteUser.toggle()
+                alertType = .deleteAccount
+                isDeleteUser = true
+                showingAlert.toggle()
             }) {
                 Text("Delete Account")
                     .padding(.horizontal)
@@ -122,49 +131,56 @@ struct ProfileView: View {
             else {
                 self.locale = "EN"
             }
-            
-           
-             
         }
         .alert(isPresented: $showingAlert) {
-            
-            Alert(title: Text("AppKey"),
-                  message: Text("\(errorMessage)"),
-                  dismissButton: .default(Text("Got it!"))
-            )
-        }
-        .alert(isPresented: $isDeleteUser) {
-            Alert(
-                title: Text("AppKey Delete Account"),
-                message: Text("Are you sure to delete your account?"),
-                primaryButton: .default(
-                    Text("Cancel")
-                    
-                ),
-                secondaryButton: .destructive(
-                    Text("Delete"),
-                    action: {
-                        verifyAccount()
-                    }
+            if alertType == .verify {
+                return Alert(
+                    title: Text("Verify AppKey Account"),
+                    message: Text("Please verify your account to manage passkey"),
+                    primaryButton: .default(
+                        Text("Cancel"),
+                        action:{
+                            isDeleteUser = false
+                        }
+                    ),
+                    secondaryButton: .destructive(
+                        Text("Verify"),
+                        action: {
+                            verifyAccount()
+                        }
+                    )
                 )
-            )
-           
-        }
-        .alert(isPresented: $showVerifyAccount) {
-            Alert(
-                title: Text("Verify AppKey Account"),
-                message: Text("Please verify your account to manage passkey"),
-                primaryButton: .default(
-                    Text("Cancel")
-                ),
-                secondaryButton: .destructive(
-                    Text("Verify"),
-                    action: {
-                        verifyAccount()
-                    }
+            }
+            else if alertType == .error {
+                return Alert(title: Text("AppKey Response"),
+                    message: Text("\(errorMessage)"),
+                    dismissButton: .cancel(Text("Got it!"), action: {})
                 )
-            )
-           
+            }
+            else if alertType == .deleteAccount {
+                return Alert(
+                    title: Text("AppKey Delete Account"),
+                    message: Text("Are you sure to delete your account?"),
+                    primaryButton: .default(
+                        Text("Cancel"),
+                        action:{
+                            isDeleteUser = false
+                        }
+                    ),
+                    secondaryButton: .destructive(
+                        Text("Delete"),
+                        action: {
+                            verifyAccount()
+                        }
+                    )
+                )
+            }
+            else {
+                return Alert(title: Text("AppKey Response"),
+                    message: Text("\(errorMessage)"),
+                    dismissButton: .cancel(Text("Got it!"), action: {})
+                )
+            }
         }
         .onChange(of: pkManager.assertionnResponse) {
             
@@ -189,18 +205,11 @@ struct ProfileView: View {
                         
                     }
                     catch let error as AppKeyError {
-                       
-                        appState.loading = false
-                        errorMessage = error.message
-                        showingAlert.toggle()
-                        
+                        alertError(error.message)
                     }
                     catch {
-                        
-                        appState.loading = false
-                        errorMessage = error.localizedDescription
-                        showingAlert.toggle()
-                        
+                        alertError(error.localizedDescription)
+                       
                     }
                 }
                 
@@ -209,9 +218,8 @@ struct ProfileView: View {
         
         .onChange(of: pkManager.errorResponse) {
             if appState.tabSelection != "Profile" { return }
-            appState.loading = false
-            errorMessage = pkManager.errorResponse ?? "Error Key"
-            showingAlert.toggle()
+            
+            alertError(pkManager.errorResponse ?? "Error Key")
         }
         .onChange(of: pkManager.status) {
             if appState.tabSelection != "Profile" { return }
@@ -220,8 +228,7 @@ struct ProfileView: View {
                 appState.loading = false
                 
                 if pkManager.status == "error" {
-                    errorMessage = "Invalid Authorization"
-                    showingAlert.toggle()
+                    alertError("Invalid Authorization")
                 }
                 
             }
@@ -245,28 +252,18 @@ struct ProfileView: View {
                     appState.target = .loggedOut
                 }
                 catch let error as AppKeyError {
-                   
-                    appState.loading = false
-                    errorMessage = error.message
-                    showingAlert.toggle()
-                    
+                    alertError(error.message)
                 }
                 catch {
-                    
-                    appState.loading = false
-                    errorMessage = error.localizedDescription
-                    showingAlert.toggle()
-                    
+                    alertError(error.localizedDescription)
                 }
             }
             
         }
         .onChange(of: appKeyGoogleAuth.errorMessage) { _, message in
             if message == "" {return}
+            alertError(message)
             print("cosyncGoogleAuth message: \(message)")
-            errorMessage = message
-            showingAlert.toggle()
-            
         }
         .onChange(of : pkManager.verifcationResponse) {
             if appState.tabSelection != "Profile" { return }
@@ -277,39 +274,33 @@ struct ProfileView: View {
                     do{
                         
                         let verifyComplete = try await AppKeyAPI.verifySocialAccount(idToken, provider: "apple")
-                       
                         
-                        let _ = try await apiManager.deleteAccount()
-                        
-                        appState.loading = false
-                        
-                        apiManager.logout()
-                        appState.target = .loggedOut
-                       
+                        if isDeleteUser {
+                            let _ = try await apiManager.deleteAccount()
+                            
+                            appState.loading = false
+                            
+                            apiManager.logout()
+                            appState.target = .loggedOut
+                        }
                         
                     }
                     catch let error as AppKeyError {
-                       
-                        appState.loading = false
-                        errorMessage = error.message
-                        showingAlert.toggle()
+                        alertError(error.message)
                         
                     }
                     catch {
-                        
-                        appState.loading = false
-                        errorMessage = error.localizedDescription
-                        showingAlert.toggle()
+                        alertError(error.localizedDescription)
                         
                     }
                 }
                 
             }
-            
-           
         }
-        
+           
     }
+        
+ 
      
   
     
@@ -343,9 +334,7 @@ struct ProfileView: View {
                         pkManager.signInWith(anchor: ASPresentationAnchor(), challenge: challengeData, allowedCredentials: [], relyingParty: Constants.RELYING_PARTY_ID, preferImmediatelyAvailableCredentials: false)
                     }
                     else {
-                        appState.loading = false
-                        errorMessage = "Invalid Challenge Data"
-                        showingAlert.toggle()
+                        alertError("Invalid Challenge Data")
                     }
                     
                 }
@@ -355,18 +344,19 @@ struct ProfileView: View {
                 
             }
             catch let error as AppKeyError {
-                appState.loading = false
-                errorMessage = error.message
-                showingAlert.toggle()
-                
+                alertError(error.message)
             }
             catch  {
-                appState.loading = false
-                errorMessage = error.localizedDescription
-                showingAlert.toggle()
-                
+                alertError(error.localizedDescription)
             }
         }
+    }
+    
+    func alertError(_ message:String) {
+        alertType = .error
+        appState.loading = false
+        errorMessage = message
+        showingAlert.toggle()
     }
     
      

@@ -129,7 +129,7 @@ struct PasskeyView: View {
                 Text("Your account does not have Passkey Authenticator.").font(.title)
             }
         }
-        .onAppear{
+        .onAppear{ 
             if let keys = apiManager.appUser?.authenticators {
                 authenticators = keys
             }
