@@ -108,65 +108,75 @@ struct SignupView: View {
                 }
             }
             
-            if isConfirmingCode {
-                
-                Text("\(loadingStatus)").font(.headline)
-                
-                
-                Group {
-                    TextField("Code", text: $code)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.numberPad)
-                        .focused($focusedField, equals: .code)
-                        .textContentType(.oneTimeCode)
-                        .submitLabel(.send)
+            VStack{
+                if isConfirmingCode {
+                    
+                    Text("\(loadingStatus)").font(.headline)
+                    
+                    
+                    Group {
+                        TextField("Code", text: $code)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .focused($focusedField, equals: .code)
+                            .textContentType(.oneTimeCode)
+                            .submitLabel(.send)
                         
-                }
-                .padding(.horizontal)
-                
-                
-                Button(action: {
+                    }
+                    .padding(.horizontal)
                     
-                    signupComplete()
                     
-                }) {
-                    Text("Submit")
-                        .padding(.horizontal)
-                    Image(systemName: "arrow.right.square")
+                    Button(action: {
+                        
+                        signupComplete()
+                        
+                    }) {
+                        Text("Submit")
+                            .padding(.horizontal)
+                        Image(systemName: "arrow.right.square")
+                    }
+                    .font(.system(.title3, design: .rounded))
+                    .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .clipShape(Capsule())
+                    
+                    
+                    
+                    
+                    Button(action: {
+                        isConfirmingCode = false
+                    }) {
+                        Text("Cancel")
+                            .padding(.horizontal)
+                        Image(systemName: "arrow.right.square")
+                    }
+                    .font(.system(.title3, design: .rounded))
+                    .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .clipShape(Capsule())
                 }
-                .padding()
-                .foregroundColor(Color.white)
-                .background(Color.green)
-                .cornerRadius(8)
-                
-                
-                
-                Button(action: {
-                    isConfirmingCode = false
-                }) {
-                    Text("Cancel")
-                        .padding(.horizontal)
-                    Image(systemName: "arrow.right.square")
+                else {
+                    
+                    Button(action: {
+                        signup()
+                    }) {
+                        Text("Signup")
+                            .padding(.horizontal)
+                        Image(systemName: "arrow.right.square")
+                    }
+                    .font(.system(.title3, design: .rounded))
+                    .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .clipShape(Capsule())
                 }
-                .padding()
-                .foregroundColor(Color.white)
-                .background(Color.orange)
-                .cornerRadius(8)
             }
-            else {
-                
-                Button(action: {
-                     signup()
-                }) {
-                    Text("Signup")
-                        .padding(.horizontal)
-                    Image(systemName: "arrow.right.square")
-                }
-                .padding()
-                .foregroundColor(Color.white)
-                .background(Color.green)
-                .cornerRadius(8)
-            }
+            .fixedSize(horizontal: true, vertical: false)
         }
         .toolbar{
             ToolbarItemGroup(placement: .keyboard) {

@@ -34,10 +34,10 @@ struct VerifyView: View {
             
             Image("AppKey").frame(width: 300).padding()
             
-            Spacer().frame(height: 150)
+            Spacer().frame(height: 50)
             
             Group {
-                TextField("Email", text: $email)
+                TextField("Handle", text: $email)
                 .textContentType(.emailAddress)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .disableAutocorrection(true)
@@ -78,20 +78,14 @@ struct VerifyView: View {
                     .padding(.horizontal)
                 Image(systemName: "arrow.right.square")
             }
-            .padding()
-            .foregroundColor(Color.white)
-            .background(Color.green)
-            .cornerRadius(8)
+            .font(.system(.title3, design: .rounded))
+            .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .background(.blue)
+            .clipShape(Capsule())
         }
-        
-        .frame(
-              minWidth: 0,
-              maxWidth: .infinity,
-              minHeight: 0,
-              maxHeight: .infinity,
-              alignment: .topLeading
-        )
-        //.background(Color.white)
+        .fixedSize(horizontal: true, vertical: false)
         
         .onTapGesture {
             if (focusedField != nil) {

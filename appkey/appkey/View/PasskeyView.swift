@@ -74,7 +74,8 @@ struct PasskeyView: View {
                     }
                     .padding()
                     .foregroundColor(Color.white)
-                    .background(Color.green)
+                    .background(Color.blue)
+                    .clipShape(Capsule())
                     .cornerRadius(8)
                 
                     ForEach(authenticators, id: \.id) { key in

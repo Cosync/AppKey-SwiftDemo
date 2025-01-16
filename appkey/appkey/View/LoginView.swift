@@ -66,7 +66,7 @@ struct LoginView: View {
             
             
             Group {
-                TextField("Email", text: $email)
+                TextField("Handle", text: $email)
                 .textContentType(.emailAddress)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .disableAutocorrection(true)
@@ -109,11 +109,14 @@ struct LoginView: View {
                         .padding(.horizontal)
                     Image(systemName: "arrow.right.square")
                 }
-                .padding()
-                .foregroundColor(Color.white)
-                .background(Color.green)
-                .cornerRadius(8)
-            
+                .font(.system(.title3, design: .rounded))
+                .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(.blue)
+                .clipShape(Capsule())
+                 
+                .frame(minWidth: 250)
             
                 if anonymousLoginEnabled  {
                     Button(action: {
@@ -123,10 +126,12 @@ struct LoginView: View {
                             .padding(.horizontal)
                         Image(systemName: "arrow.right.square")
                     }
-                    .padding()
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .cornerRadius(8)
+                    .font(.system(.title3, design: .rounded))
+                    .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .clipShape(Capsule())
                 }
             
                 if socialLogin {
@@ -165,7 +170,7 @@ struct LoginView: View {
                     
                 }
             }
-        
+            .fixedSize(horizontal: true, vertical: false)
         }
         
         .onSubmit {

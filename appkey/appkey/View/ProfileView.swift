@@ -19,7 +19,7 @@ struct ProfileView: View {
     @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
     @State private var locale:String = "EN"
     @State private var isDeleteUser:Bool = false
-   
+    @State private var displayName:String = ""
     
     @State private var showVerifyAccount:Bool = false
    
@@ -58,14 +58,28 @@ struct ProfileView: View {
                 Text("Welcome to the AppKey demo! Sign up with your email to create your passkey and log in effortlessly. Discover how simple and secure passwordless login can be—no passwords, just your passkey.").padding(.horizontal)
                 
                 
-                Text("Welcome: \(appUser.displayName)") .font(.headline)
+                Text("Welcome: \(displayName)") .font(.headline)
                 
                 Text("Handle: \(appUser.handle)") .font(.headline)
-                
                 
                 if let userName = appUser.userName {
                     Text("User Name: \(userName)") .font(.body)
                 }
+                
+                Divider()
+                
+                Group {
+                    
+                    TextField("Display Name", text: $displayName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+                    
+                }
+                .padding(.horizontal)
+                
+                
+                
             }
             
             if let app = apiManager.application, app.locales.count > 1 {
@@ -90,47 +104,71 @@ struct ProfileView: View {
                 }
             }
             
-            
-            Spacer().frame(height: 50)
-            
-            Button(action: {
-                alertType = .deleteAccount
-                isDeleteUser = true
-                showingAlert.toggle()
-            }) {
-                Text("Delete Account")
-                    .padding(.horizontal)
-                Image(systemName: "trash.square.fill")
+            VStack{
+                Button(action: {
+                    Task{
+                        await updateProfile()
+                    }
+                }) {
+                    Text("Update").padding(.horizontal)
+                    Image(systemName: "paperplane.circle.fill")
+                }
+                .font(.system(.title3, design: .rounded))
+                .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(.blue)
+                .clipShape(Capsule())
+                
+                Spacer().frame(height: 50)
+                
+                Button(action: {
+                    alertType = .deleteAccount
+                    isDeleteUser = true
+                    showingAlert.toggle()
+                }) {
+                    Text("Delete Account")
+                        .padding(.horizontal)
+                    Image(systemName: "trash.square.fill")
+                }
+                .font(.system(.title3, design: .rounded))
+                .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(.red)
+                .clipShape(Capsule())
+                
+                Spacer().frame(height: 50)
+                
+                Button(action: {
+                    apiManager.logout()
+                    appState.target = .loggedOut
+                }) {
+                    Text("Logout")
+                        .padding(.horizontal)
+                    Image(systemName: "arrow.right.square")
+                }
+                .font(.system(.title3, design: .rounded))
+                .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(.red)
+                .clipShape(Capsule())
             }
-            .padding()
-            .foregroundColor(Color.white)
-            .background(Color.red)
-            .cornerRadius(8)
-            
-            
-            Spacer().frame(height: 50)
-            
-            Button(action: {
-                apiManager.logout()
-                appState.target = .loggedOut
-            }) {
-                Text("Logout")
-                    .padding(.horizontal)
-                Image(systemName: "arrow.right.square")
-            }
-            .padding()
-            .foregroundColor(Color.white)
-            .background(Color.green)
-            .cornerRadius(8)
+            .fixedSize(horizontal: true, vertical: false)
         }
         .onAppear{
             
-            if let appUser = apiManager.appUser, let locale = appUser.locale {
-                self.locale = locale
+            if let appUser = apiManager.appUser {
+                
+                self.displayName = appUser.displayName
+                
+                if let locale = appUser.locale {
+                    self.locale = locale
+                }
             }
-            else {
-                self.locale = "EN"
-            }
+             
+           
         }
         .alert(isPresented: $showingAlert) {
             if alertType == .verify {
@@ -301,7 +339,19 @@ struct ProfileView: View {
     }
         
  
-     
+    func updateProfile() async {
+        do{
+            appState.loading.toggle()
+            let _ = try await apiManager.updateProfile(displayName: displayName)
+        }
+        catch let error as AppKeyError {
+            alertError(error.message)
+        }
+        catch  {
+            alertError(error.localizedDescription)
+        }
+        appState.loading = false
+    }
   
     
     func verifyAccount()  {
