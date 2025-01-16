@@ -170,26 +170,14 @@ struct PasskeyView: View {
                 )
             }
         }
- 
-
         .onChange(of: pkManager.errorResponse) {
-            if appState.tabSelection != "Passkeys" { return }
-            appState.loading = false
-            let message = pkManager.errorResponse ?? "Error Key"
-            showErrorMessage(message)
-        }
-        .onChange(of: pkManager.status) {
+            print("PasskeyView pkManager.errorResponse \(pkManager.errorResponse ?? "")")
             if appState.tabSelection != "Passkeys" { return }
             
-            if pkManager.status != "success" {
-                appState.loading = false
-                
-                if pkManager.status == "error" {
-                    
-                    showErrorMessage("Invalid Authorization")
-                }
-                
-            }
+            
+            appState.loading = false
+            let message = pkManager.errorResponse ?? "Invalid Authentication Key"
+            showErrorMessage(message)
         }
         .onChange(of: pkManager.assertionnResponse) {
             

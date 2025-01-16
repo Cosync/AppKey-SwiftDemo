@@ -235,16 +235,12 @@ struct SignupView: View {
                await attestationResponseHandler()
             }
         }
-        .onChange(of: pkManager.status) {  _, _ in
-            if pkManager.status != "success" {
-                appState.loading = false
-                
-                if pkManager.status == "error" {
-                    loadingStatus = "Invalid Authorization"
-                    showingAlert.toggle()
-                }
-            }
-            
+        .onChange(of: pkManager.errorResponse) {
+            if appState.tabSelection != "Singup" { return }
+            print("pkManager.errorResponse \(pkManager.errorResponse ?? "")")
+            appState.loading = false
+            loadingStatus = pkManager.errorResponse ?? "Invalid Authorization Key"
+            showingAlert.toggle()
         }
         .alert(isPresented: $showingAlert) {
             

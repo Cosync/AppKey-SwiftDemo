@@ -260,23 +260,11 @@ struct LoginView: View {
             }
         }
         .onChange(of: pkManager.errorResponse) {
-            
+            if appState.tabSelection != "Login" { return }
+            print("pkManager.errorResponse \(pkManager.errorResponse ?? "")")
             appState.loading = false
-            loadingStatus = pkManager.errorResponse ?? "Error Key"
+            loadingStatus = pkManager.errorResponse ?? "Invalid Authorization Key"
             showingAlert.toggle()
-        }
-        .onChange(of: pkManager.status) {
-            if pkManager.status != "success" {
-                appState.loading = false
-                
-                if pkManager.status == "error" {
-                    loadingStatus = "Invalid Authorization"
-                    showingAlert.toggle()
-                }
-                
-            }
-           
-            
         }
         .onChange(of: appKeyGoogleAuth.idToken) { _,token in
             if token == "" {return}
