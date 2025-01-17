@@ -19,7 +19,27 @@ struct SetUsernameView: View {
     @State private var showAlert = false
     
     var body: some View {
+        
         VStack(spacing: 20){
+            
+            HStack(spacing: 20) {
+                
+                Link(destination: URL(string: "https://cosync.io")!) {
+                    Image("Cosync").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                Spacer()
+                
+                Link(destination: URL(string: "https://appkey.info")!) {
+                    Image("AppKey").resizable().frame(width: 80.0, height: 80.0).padding()
+                }
+                
+                 
+            }
+            .padding()
+            
+            Spacer().frame(height: 50)
+            
             Text("Please enter user name").font(.title3)
             
             Group {
