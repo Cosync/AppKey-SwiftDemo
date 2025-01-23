@@ -291,29 +291,46 @@ struct LoginView: View {
            
         }
         .onAppear{
+            
             Task{
-                let _ = try await apiManager.getApp()
-                
-                if let application = apiManager.application {
+                do{
                     
-                    anonymousLoginEnabled = application.anonymousLoginEnabled
-                    isAppleLogin = application.appleLoginEnabled
-                    isGoogleLogin = application.googleLoginEnabled
-                    
-                    if application.appleLoginEnabled == true || application.googleLoginEnabled == true {
-                        socialLogin = true
+                   
+                    self.appState.loading = true
+                    if let application = try await AppKeyAPI.getApp() {
+                        
+                        print(" application ", application)
+                        
+                        anonymousLoginEnabled = application.anonymousLoginEnabled
+                        isAppleLogin = application.appleLoginEnabled
+                        isGoogleLogin = application.googleLoginEnabled
+                        
+                        if application.appleLoginEnabled == true || application.googleLoginEnabled == true {
+                            socialLogin = true
+                        }
+                        else {
+                            socialLogin = false
+                        }
+                        
+                        self.appState.application = application
+                        self.appState.anonymousLoginEnabled = application.anonymousLoginEnabled
                     }
-                    else {
-                        socialLogin = false
-                    }
+                    self.appState.loading = false
+                }
+                catch {
+                    print(error.localizedDescription)
+                    self.appState.error = "Invalid App Token"
+                    self.appState.loading = false
                 }
             }
+              
+            
         }
     }
     
     
     func handleGoogleSignInButton() {
-      
+        if self.appState.loading { return }
         self.appState.loading = true
         appKeyGoogleAuth.signIn()
     }
@@ -321,7 +338,7 @@ struct LoginView: View {
     
    
    func googleLogin(token:String){
-       
+       if self.appState.loading { return }
        Task { @MainActor in
            do{
                self.provider = "google"
@@ -349,7 +366,7 @@ struct LoginView: View {
    }
     
     func handleAppleSignInButton(authorization: ASAuthorization) {
-        
+        if self.appState.loading { return }
         //Handle authorization
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
         let identityToken = appleIDCredential.identityToken,
@@ -393,7 +410,7 @@ struct LoginView: View {
                         
                     }
                     else{
-                        let errorMessage = "App cannot access to your profile name. Please remove this AppKey in 'Sign with Apple' from your icloud setting and try again."
+                        let errorMessage = "App cannot access to your iCloud profile name. Please remove this AppKey Login in 'Sign with Apple' from your iCloud setting and try again."
                         self.showLoginError(message: errorMessage)
                     }
                 }
@@ -428,6 +445,7 @@ struct LoginView: View {
     func login()  {
         Task{
             do{
+                if self.appState.loading { return }
                 
                 if email.isEmpty {
                     loadingStatus = "Invalid Email"
@@ -486,6 +504,7 @@ struct LoginView: View {
     func loginAnonymous()  {
         Task{
             do{
+                if self.appState.loading { return }
                 
                 loadingStatus = "getting server challenge"
                 appState.loading.toggle()

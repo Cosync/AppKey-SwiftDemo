@@ -112,31 +112,9 @@ struct LoggedOutView: View {
            
        }
        .onAppear{
-           Task{
-               do{ 
-                   
-                   print("tab selection ", selection)
-                   self.appState.tabSelection = selection
-                   self.appState.loading = true
-                   if let app = try await AppKeyAPI.getApp() {
-                       
-                       print(" app ", app)
-                       
-                       self.appState.application = app;
-                       self.appState.anonymousLoginEnabled = app.anonymousLoginEnabled;
-//                       
-//                       if let googleClientId = app.googleClientId, app.googleLoginEnabled {
-//                           AppKeyGoogleAuth.shared.configure(googleClientID:googleClientId)
-//                       }
-                   }
-                   self.appState.loading = false
-               }
-               catch {
-                   print(error.localizedDescription)
-                   self.appState.error = "Invalid App Token"
-                   self.appState.loading = false
-               }
-           }
+           self.appState.tabSelection = selection
+           
+            
        }
        .onChange(of: selection){
            print("tab selection ", selection)

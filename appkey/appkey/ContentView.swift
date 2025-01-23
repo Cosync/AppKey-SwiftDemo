@@ -42,6 +42,9 @@ struct ContentView: View {
                        .frame(width: 80, height: 80)
                        .cornerRadius(10)
                    
+                   
+                   Text("Loading").padding(.horizontal).font(.caption2)
+                   
                    ProgressView()
                        .frame(width: 50, height: 50)
                        .foregroundColor(.blue)
