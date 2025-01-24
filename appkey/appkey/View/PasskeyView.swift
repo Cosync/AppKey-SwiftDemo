@@ -13,7 +13,7 @@ import AppKeyGoogleAuth
 struct PasskeyView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var apiManager = AppKeyAPIManager.shared
-    @State var authenticators:[AKPasskey] = []
+    @State var authenticators:[AKPasskey]? = nil
     @State private var selectedKey:AKPasskey? = nil
     @State private var keyName:String = ""
     @State private var showVerifyAccount:Bool = false
@@ -54,7 +54,7 @@ struct PasskeyView: View {
             
             
             if let appUser = apiManager.appUser,
-                appUser.loginProvider == "handle", authenticators.count > 0 {
+                appUser.loginProvider == "handle", let auths = authenticators, auths.count > 0 {
                 
                 VStack(alignment: .leading) {
                     
@@ -77,9 +77,10 @@ struct PasskeyView: View {
                     .background(Color.blue)
                     .clipShape(Capsule())
                     .cornerRadius(8)
-                
-                    ForEach(authenticators, id: \.id) { key in
                     
+               
+                    ForEach(auths, id: \.id) { key in
+                        
                         HStack {
                             PasskeyRow(key: key)
                             Spacer()
@@ -87,7 +88,7 @@ struct PasskeyView: View {
                             Button(action: {
                                 self.selectedKey = key
                                 self.showEditingPasskey.toggle()
-                               
+                                
                             }) {
                                 Image(systemName: "square.and.pencil")
                                     .aspectRatio(contentMode: .fit)
@@ -106,7 +107,7 @@ struct PasskeyView: View {
                             }
                             .padding()
                             
-                            if authenticators.count > 1 {
+                            if auths.count > 1 {
                                 
                                 Button(action: {
                                     self.selectedKey = key
@@ -123,6 +124,8 @@ struct PasskeyView: View {
                             }
                         }
                     }
+                 
+                    
                 }.padding()
                
             }
