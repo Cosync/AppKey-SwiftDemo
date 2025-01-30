@@ -15,7 +15,7 @@ import GoogleSignInSwift
 struct LoginView: View {
     @State private var email = ""
     @State private var provider = ""
-    
+    @State private var token = ""
     @StateObject private var pkManager = AKPasskeysManager.shared
     @StateObject private var apiManager = AppKeyAPIManager.shared
     @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
@@ -31,7 +31,7 @@ struct LoginView: View {
     @State private var isGoogleLogin: Bool = true
     @State private var isAppleLogin: Bool = true
     @State private var idToken = ""
-    
+    @State private var requireAddPasskey:Bool = false
     @State private var message: AlertMessage? = nil
  
     
@@ -64,65 +64,88 @@ struct LoginView: View {
             Text("Welcome to the AppKey demo! Log in securely using your passkey or sign up with your email to create one in seconds. See for yourself how fast and seamless passkey creation can be with AppKey—no passwords, no hassle, just security made simple.").padding(.horizontal)
             
             
-            
-            Group {
-                TextField("Handle", text: $email)
-                .textContentType(.emailAddress)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .disableAutocorrection(true)
-                .textInputAutocapitalization(.never)
-                .focused($focusedField, equals: .handle)
-                .submitLabel(.send)
-              
-            }
-            .padding(.horizontal)
-            .onAppear{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.focusedField = Field.handle
-                }
-            }
-            .toolbar{
-                ToolbarItemGroup(placement: .keyboard) {
-                    HStack {
-                        EmptyView()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Button {
-                            focusedField = nil
-                        } label: {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .foregroundColor(.blue).padding(4)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }.frame(maxWidth: .infinity, alignment: .trailing)
-                }
-            }
-            
-            VStack{
-                
-                Button(action: {
-                     
-                     login()
+            if requireAddPasskey {
+                VStack{
                     
-                }) {
-                    Text("Login")
-                        .padding(.horizontal)
-                    Image(systemName: "arrow.right.square")
+                    Text("Your account has requested a reset passkey token. Please check your email for a reset token.").padding(.horizontal).foregroundStyle(.blue)
+                    
+                    
+                    Group {
+                        TextField("Token", text: $token, axis: .vertical)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .lineLimit(5...10)
+                            .submitLabel(.send)
+                        
+                    }
+                    .padding(.horizontal)
+                    
+                    VStack{
+                        
+                        Button(action: {
+                            
+                            addPasskeyHandler()
+                            
+                        }) {
+                            Text("Submit")
+                                .padding(.horizontal)
+                            Image(systemName: "arrow.right.square")
+                        }
+                        .font(.system(.title3, design: .rounded))
+                        .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .background(.blue)
+                        .clipShape(Capsule())
+                        .frame(minWidth: 250)
+                    }
+                    .fixedSize(horizontal: true, vertical: false)
                 }
-                .font(.system(.title3, design: .rounded))
-                .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .background(.blue)
-                .clipShape(Capsule())
-                 
-                .frame(minWidth: 250)
-            
-                if anonymousLoginEnabled  {
+                
+            }
+            else {
+                
+                
+                Group {
+                    TextField("Handle", text: $email)
+                        .textContentType(.emailAddress)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+                        .focused($focusedField, equals: .handle)
+                        .submitLabel(.send)
+                    
+                }
+                .padding(.horizontal)
+                .onAppear{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.focusedField = Field.handle
+                    }
+                }
+                .toolbar{
+                    ToolbarItemGroup(placement: .keyboard) {
+                        HStack {
+                            EmptyView()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Button {
+                                focusedField = nil
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down")
+                                    .foregroundColor(.blue).padding(4)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                }
+                
+                VStack{
+                    
                     Button(action: {
-                        loginAnonymous()
+                        
+                        login()
+                        
                     }) {
-                        Text("Anonymous Login")
+                        Text("Login")
                             .padding(.horizontal)
                         Image(systemName: "arrow.right.square")
                     }
@@ -132,45 +155,63 @@ struct LoginView: View {
                     .frame(maxWidth: .infinity)
                     .background(.blue)
                     .clipShape(Capsule())
-                }
-            
-                if socialLogin {
-                    VStack (spacing: 10){
-                        Text("Or").font(.caption)
-                            .foregroundColor(.blue)
-                        
-                        if isGoogleLogin == true {
-                                                    GoogleSignInButton( scheme: GoogleSignInButtonColorScheme.light,
-                                                                        style: GoogleSignInButtonStyle.wide,
-                                                                        action: handleGoogleSignInButton)
-                                                    .frame(minWidth: 150, maxWidth: 200, minHeight:50 , maxHeight: 70)
-                            
+                    .frame(minWidth: 250)
+                    
+                    if anonymousLoginEnabled  {
+                        Button(action: {
+                            loginAnonymous()
+                        }) {
+                            Text("Anonymous Login")
+                                .padding(.horizontal)
+                            Image(systemName: "arrow.right.square")
                         }
-                        
-                        if isAppleLogin == true {
-                            SignInWithAppleButton(.signIn,            //1 .signin, or .continue or .signUp for button label
-                                onRequest: { (request) in             //2 //Set up request
-                                request.requestedScopes = [.fullName, .email]
-                            },
-                            onCompletion: { result in
-                                switch result {
+                        .font(.system(.title3, design: .rounded))
+                        .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .background(.blue)
+                        .clipShape(Capsule())
+                    }
+                    
+                    if socialLogin {
+                        VStack (spacing: 10){
+                            Text("Or").font(.caption)
+                                .foregroundColor(.blue)
+                            
+                            if isGoogleLogin == true {
+                                GoogleSignInButton( scheme: GoogleSignInButtonColorScheme.light,
+                                                    style: GoogleSignInButtonStyle.wide,
+                                                    action: handleGoogleSignInButton)
+                                .frame(minWidth: 150, maxWidth: 200, minHeight:50 , maxHeight: 70)
+                                
+                            }
+                            
+                            if isAppleLogin == true {
+                                SignInWithAppleButton(.signIn,            //1 .signin, or .continue or .signUp for button label
+                                                      onRequest: { (request) in             //2 //Set up request
+                                    request.requestedScopes = [.fullName, .email]
+                                },
+                                                      onCompletion: { result in
+                                    switch result {
                                     case .success(let authResults):
                                         handleAppleSignInButton(authorization:authResults)
                                     case .failure(let error):
-                                    print("Authorisation failed: \(error.localizedDescription)")
-                                    self.showLoginError(message: error.localizedDescription)
-                                }
-                            })
-                            .signInWithAppleButtonStyle(.whiteOutline) // .black, .white and .whiteOutline
-                            .frame(minWidth: 150, maxWidth: 200, minHeight:50, maxHeight:50)
+                                        print("Authorisation failed: \(error.localizedDescription)")
+                                        self.showLoginError(message: error.localizedDescription)
+                                    }
+                                })
+                                .signInWithAppleButtonStyle(.whiteOutline) // .black, .white and .whiteOutline
+                                .frame(minWidth: 150, maxWidth: 200, minHeight:50, maxHeight:50)
+                                
+                            }
                             
                         }
                         
                     }
                     
                 }
+                .fixedSize(horizontal: true, vertical: false)
             }
-            .fixedSize(horizontal: true, vertical: false)
         }
         
         .onSubmit {
@@ -194,26 +235,45 @@ struct LoginView: View {
             Task{
                  
                 do{
-                    if let attestation = pkManager.attestation, let challengeData = signupChallenge {
+                    if let attestation = pkManager.attestation {
                        
                         loadingStatus = "verify server challenge"
                         
-                        let response = try await AppKeyAPI.loginAnonymousComplete(handle: challengeData.user.handle, attest: attestation)
-                        print("loginAnonymousComplete  response \(response)")
-                    
+                        if requireAddPasskey {
+                          
+                            let _ = try await AppKeyAPI.addPasskeyComplete(attest: attestation)
+                                
+                            loadingStatus = "Success Adding Passkey, Please login again"
+                            showingAlert.toggle()
+                            requireAddPasskey.toggle()
+                        }
+                        else if let challengeData = signupChallenge {
+                            let response = try await AppKeyAPI.loginAnonymousComplete(handle: challengeData.user.handle, attest: attestation)
+                            print("loginAnonymousComplete  response \(response)")
+                            
+                            appState.target = .loggedIn
+                        }
+                        
                         appState.loading = false
-                        appState.target = .loggedIn
+                       
                         
                     }
                 }
-                catch {
-                    print("passkey  error  \(error.localizedDescription)")
+                catch let error as AppKeyError {
+                    print("Login error \(error.message)")
                     appState.loading = false
-                    
-                    loadingStatus = "Invalid Request"
+                    loadingStatus = error.message
                     showingAlert.toggle()
                     
                 }
+                catch {
+                    print("Login error \(error.localizedDescription)")
+                    appState.loading = false
+                    loadingStatus = error.localizedDescription
+                    showingAlert.toggle()
+                    
+                }
+                
                 
             }
         }
@@ -328,6 +388,50 @@ struct LoginView: View {
         }
     }
     
+    
+    func addPasskeyHandler(){
+        
+        Task{
+            do{
+                
+                if self.appState.loading { return }
+                
+                if token.isEmpty {
+                    loadingStatus = "Invalid Token"
+                    showingAlert.toggle()
+                    return
+                }
+                
+                AppKeyAPI.accessToken = token
+                
+                loadingStatus = "getting server challenge"
+                appState.loading.toggle()
+                
+                
+                let response = try await apiManager.addPasskey()
+                let userId = response.user.id
+                let keyUserName = response.user.name
+                
+                if let challengeData = response.challenge.decodeBase64Url, let userIdData =  userId.data(using: .utf8) {
+                    pkManager.signUpWith(userName: keyUserName, userId: userIdData, challenge: challengeData, relyingParty:Constants.RELYING_PARTY_ID, anchor: ASPresentationAnchor())
+                }
+                
+            }
+            catch let error as AppKeyError {
+                appState.loading = false
+                loadingStatus = error.message
+                showingAlert.toggle()
+                
+                print("addPasskeyHandler error \(error)")
+            }
+            catch  {
+                appState.loading = false
+                loadingStatus = error.localizedDescription
+                showingAlert.toggle()
+                print("addPasskeyHandler error \(error.localizedDescription)")
+            }
+        }
+    }
     
     func handleGoogleSignInButton() {
         if self.appState.loading { return }
@@ -459,27 +563,30 @@ struct LoginView: View {
                 
                 if let response = try await AppKeyAPI.login(handle: email){
                     
-                 
-                    
-                    if let challengeData = response.challenge.decodeBase64Url { 
+                   
+                    if let resetPasskey = response.requireAddPasskey {
+                        requireAddPasskey = resetPasskey
+                       
+                    }
+                    else if let challengeData = response.challenge.decodeBase64Url {
                         
                         pkManager.signInWith(anchor: ASPresentationAnchor(), challenge: challengeData, allowedCredentials: [], relyingParty: Constants.RELYING_PARTY_ID, preferImmediatelyAvailableCredentials: false)
                     }
                     else {
-                        appState.loading = false
+                       
                         loadingStatus = "Invalid Challenge Data"
                         showingAlert.toggle()
                     }
                     
                 }
-                else {
-                    appState.loading = false
-                }
+                 
+                appState.loading = false
+                
                 
             }
             catch let error as AppKeyError {
                 appState.loading = false
-                
+               
                 if(error == .passkeyNotExist){
                     appState.loading = false
                     loadingStatus = "Your account does not have passkey. Please signup again."
@@ -490,7 +597,7 @@ struct LoginView: View {
                     showingAlert.toggle()
                 }
                 
-                print("login error \(error.localizedDescription)")
+                print("login error \(error)")
             }
             catch  {
                 appState.loading = false
@@ -587,3 +694,4 @@ struct LoginView: View {
 #Preview {
     LoginView()
 }
+

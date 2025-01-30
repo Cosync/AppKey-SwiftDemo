@@ -13,7 +13,7 @@ import AppKeyGoogleAuth
 struct PasskeyView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var apiManager = AppKeyAPIManager.shared
-    @State var authenticators:[AKPasskey]? = nil
+    @State var authenticators:[AKPasskey] = []
     @State private var selectedKey:AKPasskey? = nil
     @State private var keyName:String = ""
     @State private var showVerifyAccount:Bool = false
@@ -54,7 +54,7 @@ struct PasskeyView: View {
             
             
             if let appUser = apiManager.appUser,
-                appUser.loginProvider == "handle", let auths = authenticators, auths.count > 0 {
+                appUser.loginProvider == "handle", authenticators.count > 0 {
                 
                 VStack(alignment: .leading) {
                     
@@ -77,10 +77,9 @@ struct PasskeyView: View {
                     .background(Color.blue)
                     .clipShape(Capsule())
                     .cornerRadius(8)
+                
+                    ForEach(authenticators, id: \.id) { key in
                     
-               
-                    ForEach(auths, id: \.id) { key in
-                        
                         HStack {
                             PasskeyRow(key: key)
                             Spacer()
@@ -88,7 +87,7 @@ struct PasskeyView: View {
                             Button(action: {
                                 self.selectedKey = key
                                 self.showEditingPasskey.toggle()
-                                
+                               
                             }) {
                                 Image(systemName: "square.and.pencil")
                                     .aspectRatio(contentMode: .fit)
@@ -107,7 +106,7 @@ struct PasskeyView: View {
                             }
                             .padding()
                             
-                            if auths.count > 1 {
+                            if authenticators.count > 1 {
                                 
                                 Button(action: {
                                     self.selectedKey = key
@@ -124,8 +123,6 @@ struct PasskeyView: View {
                             }
                         }
                     }
-                 
-                    
                 }.padding()
                
             }
@@ -173,6 +170,7 @@ struct PasskeyView: View {
                 )
             }
         }
+        
         .onChange(of: pkManager.errorResponse) {
             print("PasskeyView pkManager.errorResponse \(pkManager.errorResponse ?? "")")
             if appState.tabSelection != "Passkeys" { return }
@@ -182,6 +180,7 @@ struct PasskeyView: View {
             let message = pkManager.errorResponse ?? "Invalid Authentication Key"
             showErrorMessage(message)
         }
+         
         .onChange(of: pkManager.assertionnResponse) {
             
             if appState.tabSelection != "Passkeys" { return }
@@ -213,8 +212,11 @@ struct PasskeyView: View {
                             showDeletingPasskey = false
                              
                             let response = try await apiManager.removePasskey(keyId: selectedKey!.id)
+                            
+                            if let keys = response?.authenticators {
+                                authenticators = keys
+                            }
                            
-                            authenticators = response!.authenticators
                             selectedKey = nil
                         }
                        
@@ -259,7 +261,9 @@ struct PasskeyView: View {
         do{
             if let attestation = pkManager.attestation {
                 let result = try await AppKeyAPI.addPasskeyComplete(attest: attestation)
-                authenticators = result.authenticators;
+                if let keys = result.authenticators {
+                    authenticators = keys
+                }
                 
             }
         }
@@ -315,7 +319,10 @@ struct PasskeyView: View {
     func updateKeyName() async {
         do{
             if let response = try await AppKeyAPI.updatePasskey(keyId: selectedKey!.id, keyName: keyName){
-                authenticators = response.authenticators;
+              
+                if let keys = response.authenticators {
+                    authenticators = keys
+                }
             }
         }
         catch let error as AppKeyError {

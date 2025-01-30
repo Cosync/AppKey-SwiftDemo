@@ -33,7 +33,7 @@ struct LoggedOutView: View {
                SignupView().tabItem {
                    Image(systemName: "person.badge.plus")
                    Text("Signup")
-               }.tag("Signup") 
+               }.tag("Signup")
            }
            
            
@@ -125,4 +125,5 @@ struct LoggedOutView: View {
    
    
 }
+
 

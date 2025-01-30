@@ -145,7 +145,19 @@ struct VerifyView: View {
             loadingStatus = pkManager.errorResponse ?? "Error Key"
             showingAlert.toggle()
         }
-        
+        .onChange(of: pkManager.status) {
+            if pkManager.status != "success" {
+                appState.loading = false
+                
+                if pkManager.status == "error" {
+                    loadingStatus = "Invalid Authorization"
+                    showingAlert.toggle()
+                }
+                
+            }
+           
+            
+        }
         .alert(isPresented: $showingAlert) {
             
             Alert(title: Text("AppKey"),
