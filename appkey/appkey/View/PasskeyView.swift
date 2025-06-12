@@ -261,10 +261,7 @@ struct PasskeyView: View {
         do{
             if let attestation = pkManager.attestation {
                 let result = try await AppKeyAPI.addPasskeyComplete(attest: attestation)
-                if let keys = result.authenticators {
-                    authenticators = keys
-                }
-                
+                authenticators = result.authenticators
             }
         }
         catch let error as AppKeyError {
@@ -319,10 +316,7 @@ struct PasskeyView: View {
     func updateKeyName() async {
         do{
             if let response = try await AppKeyAPI.updatePasskey(keyId: selectedKey!.id, keyName: keyName){
-              
-                if let keys = response.authenticators {
-                    authenticators = keys
-                }
+                authenticators = response.authenticators
             }
         }
         catch let error as AppKeyError {

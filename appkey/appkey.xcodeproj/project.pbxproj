@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		528551CD2CD9BADC003E5941 /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 528551CC2CD9BADC003E5941 /* AppKeyGoogleAuth */; };
 		528551CF2CD9BADC003E5941 /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 528551CE2CD9BADC003E5941 /* AppKeySwift */; };
+		52B0A62B2DFAB5BC006F5CAF /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52B0A62A2DFAB5BC006F5CAF /* AppKeyGoogleAuth */; };
+		52B0A62D2DFAB5BC006F5CAF /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52B0A62C2DFAB5BC006F5CAF /* AppKeySwift */; };
+		52B0A6302DFAB9E6006F5CAF /* AppKeyGoogleAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52B0A62F2DFAB9E6006F5CAF /* AppKeyGoogleAuth */; };
+		52B0A6322DFAB9E6006F5CAF /* AppKeySwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52B0A6312DFAB9E6006F5CAF /* AppKeySwift */; };
 		52CAA8A02CB5078C00B647E9 /* appkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA89F2CB5078C00B647E9 /* appkeyApp.swift */; };
 		52CAA8A22CB5078C00B647E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CAA8A12CB5078C00B647E9 /* ContentView.swift */; };
 		52CAA8A42CB5078E00B647E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52CAA8A32CB5078E00B647E9 /* Assets.xcassets */; };
@@ -108,6 +112,7 @@
 				52DE24462CD22907003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24502CD39674003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2AA2D27DDE5000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52B0A62B2DFAB5BC006F5CAF /* AppKeyGoogleAuth in Frameworks */,
 				52DE242E2CD0D0FA003E1708 /* AppKeySwift in Frameworks */,
 				52DE244D2CD31B92003E1708 /* AppKeySwift in Frameworks */,
 				CB2074182CF0BB6900535843 /* AppKeyGoogleAuth in Frameworks */,
@@ -126,16 +131,19 @@
 				CB20741D2CF0BC1100535843 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2862D27CD0E000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2C42D27E179000F1661 /* AppKeySwift in Frameworks */,
+				52B0A6322DFAB9E6006F5CAF /* AppKeySwift in Frameworks */,
 				52F6E2A12D27D4EB000F1661 /* AppKeySwift in Frameworks */,
 				52DE24432CD228CB003E1708 /* AppKeySwift in Frameworks */,
 				52F6E2A42D27D50B000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2C22D27E179000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52DE24362CD218E4003E1708 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E29A2D27D44E000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52B0A62D2DFAB5BC006F5CAF /* AppKeySwift in Frameworks */,
 				52F6E2922D27D3A5000F1661 /* AppKeySwift in Frameworks */,
 				528551CD2CD9BADC003E5941 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2AF2D27DE46000F1661 /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2BD2D27E12F000F1661 /* AppKeyGoogleAuth in Frameworks */,
+				52B0A6302DFAB9E6006F5CAF /* AppKeyGoogleAuth in Frameworks */,
 				52F6E2B12D27DE46000F1661 /* AppKeySwift in Frameworks */,
 				52F6E2A62D27D50B000F1661 /* AppKeySwift in Frameworks */,
 				52F6E2972D27D3EC000F1661 /* AppKeySwift in Frameworks */,
@@ -250,7 +258,7 @@
 			);
 			mainGroup = 52CAA8932CB5078C00B647E9;
 			packageReferences = (
-				52F6E2CE2D2E692F000F1661 /* XCRemoteSwiftPackageReference "AppKeySwift" */,
+				52B0A62E2DFAB9E6006F5CAF /* XCRemoteSwiftPackageReference "AppKeySwift" */,
 			);
 			productRefGroup = 52CAA89D2CB5078C00B647E9 /* Products */;
 			projectDirPath = "";
@@ -518,6 +526,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		52B0A62E2DFAB9E6006F5CAF /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.32;
+			};
+		};
 		52DE24442CD22907003E1708 /* XCRemoteSwiftPackageReference "AppKeySwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Cosync/AppKeySwift.git";
@@ -575,6 +591,24 @@
 		};
 		528551CE2CD9BADC003E5941 /* AppKeySwift */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52B0A62A2DFAB5BC006F5CAF /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeyGoogleAuth;
+		};
+		52B0A62C2DFAB5BC006F5CAF /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppKeySwift;
+		};
+		52B0A62F2DFAB9E6006F5CAF /* AppKeyGoogleAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52B0A62E2DFAB9E6006F5CAF /* XCRemoteSwiftPackageReference "AppKeySwift" */;
+			productName = AppKeyGoogleAuth;
+		};
+		52B0A6312DFAB9E6006F5CAF /* AppKeySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52B0A62E2DFAB9E6006F5CAF /* XCRemoteSwiftPackageReference "AppKeySwift" */;
 			productName = AppKeySwift;
 		};
 		52DE242D2CD0D0FA003E1708 /* AppKeySwift */ = {
