@@ -15,7 +15,8 @@ struct SignupView: View {
     @StateObject private var apiManager = AppKeyAPIManager.shared
     
     @State private var handle = ""
-    @State private var displayName = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
     @State private var code = ""
     @State private var locale = "EN"
     @State private var username = ""
@@ -29,7 +30,8 @@ struct SignupView: View {
     @State  var signupToken:String = ""
     
     enum Field {
-        case displayName
+        case firstName
+        case lastName
         case handle
         case code
          
@@ -64,10 +66,17 @@ struct SignupView: View {
             
         
             Group {
-                TextField("Full Name", text: $displayName)
+                TextField("First Name", text: $firstName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .disableAutocorrection(true)
-                    .focused($focusedField, equals: .displayName)
+                    .focused($focusedField, equals: .firstName)
+                    .textContentType(.givenName)
+                    .submitLabel(.next)
+                
+                TextField("Last Name", text: $lastName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .disableAutocorrection(true)
+                    .focused($focusedField, equals: .lastName)
                     .textContentType(.givenName)
                     .submitLabel(.next)
                 
@@ -108,23 +117,25 @@ struct SignupView: View {
                 }
             }
             
+            if isConfirmingCode {
+                Text("\(loadingStatus)").font(.headline)
+                
+                
+                Group {
+                    TextField("Code", text: $code)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .code)
+                        .textContentType(.oneTimeCode)
+                        .submitLabel(.send)
+                    
+                }
+                .padding(.horizontal)
+                
+            }
+            
             VStack{
                 if isConfirmingCode {
-                    
-                    Text("\(loadingStatus)").font(.headline)
-                    
-                    
-                    Group {
-                        TextField("Code", text: $code)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.numberPad)
-                            .focused($focusedField, equals: .code)
-                            .textContentType(.oneTimeCode)
-                            .submitLabel(.send)
-                        
-                    }
-                    .padding(.horizontal)
-                    
                     
                     Button(action: {
                         
@@ -204,7 +215,9 @@ struct SignupView: View {
         .onSubmit {
             
             switch focusedField {
-            case .displayName:
+            case .firstName:
+                focusedField = .handle
+            case .lastName:
                 focusedField = .handle
             
             default:
@@ -222,7 +235,7 @@ struct SignupView: View {
         }
         .onAppear{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.focusedField = Field.displayName
+                self.focusedField = Field.firstName
             }
         }
         .onChange(of: pkManager.attestationResponse) {
@@ -311,12 +324,17 @@ struct SignupView: View {
                 }
                 
             }
-           
+            
+            if firstName.isEmpty || lastName.isEmpty {
+                loadingStatus = "Please enter all required fields"
+                showingAlert.toggle()
+                return
+            }
             
             loadingStatus = "getting server challenge"
             appState.loading = true
             do {
-                if let response = try await AppKeyAPI.signup(handle: handle, displayName:displayName){
+                if let response = try await AppKeyAPI.signup(handle: handle, firstName:firstName, lastName:lastName, locale:locale){
                            
                     let userId = response.user.id
                     let keyUserName = response.user.name

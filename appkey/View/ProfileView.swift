@@ -19,7 +19,8 @@ struct ProfileView: View {
     @StateObject var appKeyGoogleAuth = AppKeyGoogleAuth.shared
     @State private var locale:String = "EN"
     @State private var isDeleteUser:Bool = false
-    @State private var displayName:String = ""
+    @State private var firstName:String = ""
+    @State private var lastName:String = ""
     
     @State private var showVerifyAccount:Bool = false
    
@@ -58,7 +59,7 @@ struct ProfileView: View {
                 Text("Welcome to the AppKey demo! Sign up with your email to create your passkey and log in effortlessly. Discover how simple and secure passwordless login can be—no passwords, just your passkey.").padding(.horizontal)
                 
                 
-                Text("Welcome: \(displayName)") .font(.headline)
+                Text("Welcome: \(firstName) \(lastName)") .font(.headline)
                 
                 Text("Handle: \(appUser.handle)") .font(.headline)
                 
@@ -70,11 +71,14 @@ struct ProfileView: View {
                 
                 Group {
                     
-                    TextField("Display Name", text: $displayName)
+                    TextField("First Name", text: $firstName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
-                        .textInputAutocapitalization(.never)
+                        
                     
+                    TextField("Last Name", text: $lastName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .disableAutocorrection(true) 
                 }
                 .padding(.horizontal)
                 
@@ -161,7 +165,8 @@ struct ProfileView: View {
             
             if let appUser = apiManager.appUser {
                 
-                self.displayName = appUser.displayName
+                self.firstName = appUser.firstName
+                self.lastName = appUser.lastName
                 
                 if let locale = appUser.locale {
                     self.locale = locale
@@ -342,7 +347,7 @@ struct ProfileView: View {
     func updateProfile() async {
         do{
             appState.loading.toggle()
-            let _ = try await apiManager.updateProfile(displayName: displayName)
+            let _ = try await apiManager.updateProfile(firstName: firstName, lastName: lastName)
         }
         catch let error as AppKeyError {
             alertError(error.message)

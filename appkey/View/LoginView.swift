@@ -458,7 +458,7 @@ struct LoginView: View {
            }
            catch let error as AppKeyError {
                if error == .accountDoesNotExist {
-                   self.signupSocialAccount(token: token, email: appKeyGoogleAuth.email, displayName: "\(appKeyGoogleAuth.givenName) \(appKeyGoogleAuth.familyName) ")
+                   self.signupSocialAccount(token: token, email: appKeyGoogleAuth.email, firstName: appKeyGoogleAuth.givenName, lastName:appKeyGoogleAuth.familyName)
                }
                else {
                    
@@ -510,7 +510,7 @@ struct LoginView: View {
                         let givenName = name.givenName,
                         let familyName =  name.familyName {
                         // new account
-                        signupSocialAccount(token: self.idToken, email: self.email, displayName: "\(givenName) \(familyName)")
+                        signupSocialAccount(token: self.idToken, email: self.email, firstName:givenName, lastName: familyName)
                         
                     }
                     else{
@@ -656,14 +656,14 @@ struct LoginView: View {
     
     
    
-    func signupSocialAccount(token:String, email:String, displayName:String)  {
+    func signupSocialAccount(token:String, email:String, firstName:String, lastName:String)  {
         
         Task {
             do {
                 
                 self.appState.loading = true
                 
-                let _ = try await apiManager.socialSignup(token, email:email, provider: self.provider, displayName: displayName)
+                let _ = try await apiManager.socialSignup(token, email:email, provider: self.provider, firstName: firstName, lastName: lastName)
                     
                 self.appState.target = .loggedIn
                 
